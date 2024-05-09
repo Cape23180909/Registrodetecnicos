@@ -1,0 +1,48 @@
+﻿@page "/Create"
+@inject TecnicoServies tecnicoServies
+@inject NavigationManager navigationManager
+@rendermode InteractiveServer
+
+<PageTitle>RegistrodeTecnicos</PageTitle>
+<EditForm Model="tecnico">
+ <DataAnnotationsValidator />
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3>Crear Registro</h3>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <!-- Campo "TecnicoID" -->
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                        <label for="TecnicoID">TecnicoID:</label>
+                        <input type="text" class="form-control" id="TecnicoID" @bind="@tecnico.TecnicoID" />
+                    </div>
+
+                    <!-- Campo "Nombres" -->
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                        <label for="Nombres">Nombres:</label>
+                        <input type="text" class="form-control" id="Nombres" @bind="@tecnico.Nombres" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-primary" @onclick="GuardarAsync">
+                    Crear <i class="bi bi-file-earmark" tabindex="0"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    Tecnicos tecnico = new Tecnicos(); // Ajusta el tipo de dato y asegúrate de importar el espacio de nombres correcto.
+
+    private async Task GuardarAsync()
+    {
+        // Aquí puedes agregar la lógica para guardar el registro.
+    }
+}
