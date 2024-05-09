@@ -4,45 +4,58 @@
 @rendermode InteractiveServer
 
 <PageTitle>RegistrodeTecnicos</PageTitle>
+
 <EditForm Model="tecnico">
- <DataAnnotationsValidator />
+    <DataAnnotationsValidator />
 
     <div class="container">
         <div class="card shadow-lg">
             <div class="card-header">
-                <h3>Crear Registro</h3>
+                <h3>Crear Tecnico</h3>
             </div>
 
             <div class="card-body">
                 <div class="row">
-                    <!-- Campo "TecnicoID" -->
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                        <label for="TecnicoID">TecnicoID:</label>
-                        <input type="text" class="form-control" id="TecnicoID" @bind="@tecnico.TecnicoID" />
-                    </div>
+                    <div class="col-xs-12 col-md-8 col-lg-6 col-xl-4">
+                        <div class="mb-3">
+                            <label> TecnicoId</label>
+                            <InputNumber @bind-Value="tecnico.TecnicoId" />
+                            <ValidationMessage For="@(() => tecnico.TecnicoId)" />
+                        </div>
 
-                    <!-- Campo "Nombres" -->
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                        <label for="Nombres">Nombres:</label>
-                        <input type="text" class="form-control" id="Nombres" @bind="@tecnico.Nombres" />
+                        <div class="mb-3">
+                            <label> Nombres</label>
+                            <InputText @bind-Value="tecnico.Nombre" />
+                            <ValidationMessage For="@(() => tecnico.Nombre)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label> SueldoHora</label>
+                            <InputNumber @bind-Value="tecnico.Sueldohora" />
+                            <ValidationMessage For="@(() => tecnico.Sueldohora)" />
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="card-footer d-flex justify-content-between">
                 <button type="button" class="btn btn-primary" @onclick="GuardarAsync">
-                    Crear <i class="bi bi-file-earmark" tabindex="0"></i>
+                    <span>Crear <i class="bi bi-file-earmark"></i></span>
                 </button>
+
+                <a href="/DetailTecnicos" class="btn btn-secondary">
+                    <span>Volver a Consulta <i class="bi bi-arrow-return-left"></i></span>
+                </a>
             </div>
         </div>
     </div>
 </EditForm>
 
 @code {
-    Tecnicos tecnico = new Tecnicos(); // Ajusta el tipo de dato y asegúrate de importar el espacio de nombres correcto.
+    public Tecnicos tecnico = new Tecnicos();
 
     private async Task GuardarAsync()
     {
-        // Aquí puedes agregar la lógica para guardar el registro.
+
     }
 }
