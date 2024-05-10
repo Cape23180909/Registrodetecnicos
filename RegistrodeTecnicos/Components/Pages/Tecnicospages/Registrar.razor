@@ -1,0 +1,112 @@
+﻿@page "/Create1"
+@inject TecnicoServies tecnicoServies
+@inject NavigationManager navigationManager
+@rendermode InteractiveServer
+
+<PageTitle>RegistrodeTecnicos</PageTitle>
+
+<EditForm Model="tecnico" OnValidSubmit="GuardarAsync">
+    <DataAnnotationsValidator />
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3>Crear Tecnico</h3>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-md-8 col-lg-6 col-xl-4">
+                        <div class="mb-3">
+                            <label> TecnicoId</label>
+                            <InputNumber @bind-Value="tecnico.TecnicoId" />
+                            <ValidationMessage For="@(() => tecnico.TecnicoId)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label> Nombres</label>
+                            <InputText @bind-Value="tecnico.Nombre" />
+                            <ValidationMessage For="@(() => tecnico.Nombre)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label> SueldoHora</label>
+                            <InputNumber @bind-Value="tecnico.Sueldohora" />
+                            <ValidationMessage For="@(() => tecnico.Sueldohora)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary" >
+                    <span>Crear <i class="bi bi-file-earmark"></i></span>
+                </button>
+
+                <a href="/Create" class="btn btn-secondary">
+                    <span>Volver a listado de tecnicos <i class="bi bi-arrow-return-left"></i></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    public Tecnicos tecnico = new Tecnicos();
+
+    private async Task GuardarAsync()
+    {
+
+        if (Validar())
+        {
+            
+            return;
+        }
+
+        var guardo = await tecnicoServies.Guardar(tecnico);
+        if (guardo)
+        {
+            Nuevo();
+        }
+
+
+    }
+
+
+    public void Nuevo()
+    {
+        tecnico = new Tecnicos();
+        Existe = false;
+    }
+
+    public async Task Buscar()
+    {
+        Existe = false;
+        var tecnicoEncontrado = await tecnicoServies.Buscar(tecnico.TecnicoId);
+
+        if (tecnicoEncontrado != null)
+        {
+            tecnico = tecnicoEncontrado;
+        }
+        else
+        {
+            Nuevo();
+        }
+    }
+
+    public bool Validar()
+    {
+        Existe = (tecnicoServies.Listar(t => t.Nombre.ToLower() == tecnico.Nombre.ToLower() && t.TecnicoId != tecnico.TecnicoId).Any());
+        return Existe;
+    }
+
+   
+
+    public async Task Eliminar()
+    {
+        var eliminado = await tecnicoServies.Eliminar(tecnico.TecnicoId);
+        Nuevo();
+    }
+
+    private bool Existe = false; // Variable para controlar si el técnico existe en la base de datos
+}

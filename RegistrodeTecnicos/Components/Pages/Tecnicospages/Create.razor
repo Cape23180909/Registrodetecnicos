@@ -3,59 +3,75 @@
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
-<PageTitle>RegistrodeTecnicos</PageTitle>
+<PageTitle>Registro de Técnicos</PageTitle>
 
-<EditForm Model="tecnico">
-    <DataAnnotationsValidator />
-
-    <div class="container">
-        <div class="card shadow-lg">
-            <div class="card-header">
-                <h3>Crear Tecnico</h3>
+<EditForm Model="tecnico" class="border shadow-lg p-3 rounded">
+    <div class="card-header bg-primary text-white text-center py-2 rounded">
+        <h3 style="font-weight: bold;" class="mb-0 font-weight-bold">Listado de Tecnicos</h3>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3 align-items-end">
+            <div class="col-md-3">
+                <!-- Sección eliminada: Filtrar por -->
             </div>
-
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-xs-12 col-md-8 col-lg-6 col-xl-4">
-                        <div class="mb-3">
-                            <label> TecnicoId</label>
-                            <InputNumber @bind-Value="tecnico.TecnicoId" />
-                            <ValidationMessage For="@(() => tecnico.TecnicoId)" />
-                        </div>
-
-                        <div class="mb-3">
-                            <label> Nombres</label>
-                            <InputText @bind-Value="tecnico.Nombre" />
-                            <ValidationMessage For="@(() => tecnico.Nombre)" />
-                        </div>
-
-                        <div class="mb-3">
-                            <label> SueldoHora</label>
-                            <InputNumber @bind-Value="tecnico.Sueldohora" />
-                            <ValidationMessage For="@(() => tecnico.Sueldohora)" />
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-6">
+                <!-- Sección eliminada: Búsqueda -->
             </div>
-
-            <div class="card-footer d-flex justify-content-between">
-                <button type="button" class="btn btn-primary" @onclick="GuardarAsync">
-                    <span>Crear <i class="bi bi-file-earmark"></i></span>
-                </button>
-
-                <a href="/DetailTecnicos" class="btn btn-secondary">
-                    <span>Volver a Consulta <i class="bi bi-arrow-return-left"></i></span>
-                </a>
+            <div class="col-md-3 text-end">
+                <a href="/Create1" class="btn btn-success" type="button"><span class="bi bi-floppy"></span> Crear </a>
             </div>
         </div>
     </div>
+    <table class="table table-bordered text-center">
+        <thead class="bg-primary text-white">
+            <tr>
+                <th>T&eacute;cnico Id</th>
+                <th>Nombre</th> 
+                <th>SueldoHora</th>
+                <th>Ver</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prioridad in prioridades)
+            {
+                <tr>
+                    <td>@prioridad.TecnicoId</td>
+                    <td>@prioridad.Nombre</td>
+                    <td>@prioridad.Sueldohora</td>
+                    <td>
+                        <a href="/Prioridad/Details/@prioridad.TecnicoId" style="border: none; background-color: transparent;" class="btn-detalle">
+                            <span class="bi bi-info-circle-fill" style="font-size: 2rem;"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/Prioridad/Edit/@prioridad.TecnicoId" style="border: none; background-color: transparent;" class="btn-editar">
+                            <span class="bi bi-marker-tip" style="font-size: 2rem;"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/Prioridad/Delete/@prioridad.TecnicoId" style="border: none; background-color: transparent;" class="btn-eliminar">
+                            <span class="bi bi-dash-circle-fill" style="font-size: 2rem;"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </EditForm>
 
 @code {
     public Tecnicos tecnico = new Tecnicos();
+    public List<Tecnicos> prioridades = new List<Tecnicos>(); // Asumiendo que prioridades es la lista que deseas mostrar
 
-    private async Task GuardarAsync()
+    private string filtro = "id"; // Inicializar el filtro
+    private string valorFiltro = ""; // Inicializar el valor de filtro
+
+    private async Task Buscar()
     {
-
+        // Implementación del método Buscar
     }
+
+    private bool Existe = false; // Variable para controlar si el técnico existe en la base de datos
 }
