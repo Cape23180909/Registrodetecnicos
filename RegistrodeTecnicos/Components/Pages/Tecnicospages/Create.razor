@@ -3,38 +3,44 @@
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
-<PageTitle>RegistrodeTecnicos</PageTitle>
-<EditForm Model="tecnico">
+<PageTitle>Registro de Tecnicos</PageTitle>
+<EditForm Model="tecnico" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
-    <div class="card shadow-lg border-0 rounde" style="background-color: #f8f9fa ">
-        <div class="card-header bg-primary text-white" style="text-align: center;">
-            <h3> <i class="fas fa-clipboard-list"></i> Registro de Prioridades</h3>
+    <div class="card">
+        <div class="card-header bg-primary text-white text-center py-2 rounded">
+            <h3> <i class="fas fa-clipboard-list"></i> Registro de Tecnicos</h3>
         </div>
 
         <div class="card-body">
-            @*TecnicoId*@
+            <!-- TecnicoId -->
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="TecnicoId" class="form-label">TecnicoId:</label>
                     <div class="input-group">
                         <div style="width: 40%; height: 1em;">
                             <InputNumber @bind-Value="tecnico.TecnicoId" class="form-control" style="font-size: 0.8em;" aria-describedby="BotonBuscar" />
-                        </div>/>
+                        </div>
                         <ValidationMessage For="@(() => tecnico.TecnicoId)" />
                     </div>
-                    @*Nombres*@
-                    <div class="mb-3">
-                        <label for="Nombres" class="form-label">Descripci&oacuten:</label>
-                        <InputText @bind-Value="tecnico.Nombre" class="form-control" />
-                        <ValidationMessage For="@(() => tecnico.Nombre)" />
-                    </div>
-                    @*SueldoHora*@
-                    <div class="mb-3">
-                        <label> SueldoHora </label>
-                        <InputNumber @bind-Value="tecnico.Sueldohora" class="form-control" />
-                        <ValidationMessage For="@(() => tecnico.Sueldohora)" />
-                    </div>
                 </div>
+            </div>
+
+            <!-- Nombres -->
+            <div class="mb-3">
+                <label for="Nombres" class="form-label">Nombre:</label>
+                <InputText @bind-Value="tecnico.Nombre" class="form-control" />
+                <ValidationMessage For="@(() => tecnico.Nombre)" />
+                @if (Existe)
+                {
+                    <p class="text-danger">Ya existe una persona que tiene este nombre.</p>
+                }
+            </div>
+
+            <!-- SueldoHora -->
+            <div class="mb-3">
+                <label> SueldoHora </label>
+                <InputNumber @bind-Value="tecnico.Sueldohora" class="form-control" />
+                <ValidationMessage For="@(() => tecnico.Sueldohora)" />
             </div>
         </div>
 
@@ -93,6 +99,7 @@
         if (guardo)
         {
             Nuevo();
+            navigationManager.NavigateTo("/Index");
         }
     }
 
