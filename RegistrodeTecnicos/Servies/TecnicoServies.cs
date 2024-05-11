@@ -19,7 +19,7 @@ namespace RegistrodeTecnicos.Servies
         public async Task<bool> Existe (int TecnicoId)
         {
             return await Contexto.Tecnicos.AnyAsync(p => p.TecnicoId == TecnicoId);
-
+            
         }
 
         //Metodo Insertar
@@ -31,11 +31,12 @@ namespace RegistrodeTecnicos.Servies
 
         // Metodo Modificar
 
-        public async Task <bool> Modificar (Tecnicos tecnico)
+        private async Task <bool> Modificar (Tecnicos tecnico)
         {
-            Contexto.Update(tecnico);
-            return await Contexto.SaveChangesAsync() > 0;
-
+            Contexto.Tecnicos.Update(tecnico);
+            var modificado = await Contexto.SaveChangesAsync() > 0;
+            Contexto.Entry(tecnico).State = EntityState.Detached;
+            return modificado;
         }
 
         // Metodo guardar
@@ -59,16 +60,21 @@ namespace RegistrodeTecnicos.Servies
 
         //Metodo Buscar
 
-        public async Task <Tecnicos> Buscar (int id)
+        public async Task <Tecnicos?> Buscar (int id)
         {
-            return await Contexto.Tecnicos.AsNoTracking().FirstOrDefaultAsync (P => P.TecnicoId == id);
+            return await Contexto.Tecnicos
+                .AsNoTracking()
+                .FirstOrDefaultAsync (P => P.TecnicoId == id);
         }
 
         //Metodo listar
 
-        public List <Tecnicos> Listar (Expression<Func<Tecnicos, bool>> criterio)
+        public async Task<List<Tecnicos>> Listar (Expression<Func<Tecnicos, bool>> criterio)
         {
-            return Contexto.Tecnicos.AsNoTracking().Where(criterio).ToList ();
+            return Contexto.Tecnicos
+                .AsNoTracking()
+                .Where(criterio)
+                .ToList ();
         }
     }
 }

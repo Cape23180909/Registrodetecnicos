@@ -47,7 +47,7 @@
                             </a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger ml-1" @onclick="() => ConfirmarEliminar(p.TecnicoId)">
+                            <button type="button" class="btn btn-danger ml-1" @onclick="() => IrEliminar(p.TecnicoId)">
                                 Eliminar <i class="bi bi-trash" />
                             </button>
                         </td>
@@ -64,14 +64,15 @@
 @code {
     public List<Tecnicos> ListaTecnicos = new List<Tecnicos>();
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
-        ListaTecnicos = tecnicoServies.Listar(c => true);
+        ListaTecnicos = await tecnicoServies.Listar(c => c.TecnicoId > 0);
     }
 
-    public void ConfirmarEliminar(int tecnicoId)
+    public void IrEliminar(int tecnicoId)
     {
-        navigationManager.NavigateTo($"/Create1/{tecnicoId}");
+        navigationManager.NavigateTo($"/Tecnico/Delete/TecnicoId={tecnicoId}");
     }
+
 
 }
