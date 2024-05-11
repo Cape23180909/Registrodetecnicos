@@ -48,6 +48,7 @@
             <div class="btn-group">
                 <button type="button" class="btn btn-outline-primary ml-2" @onclick="Nuevo"><span class="bi bi-plus"></span> Nuevo </button>
                 <button type="submit" class="btn btn-outline-success ml-2"><span class="bi bi-check-circle-fill"></span> Guardar </button>
+                <button type="button" class="btn btn-outline-danger" @onclick="Eliminar"><span class="bi bi-trash-fill"></span> Eliminar </button>
                 <button type="button" class="btn btn-outline-danger" @onclick="Retroceder"><span class="bi bi-arrow-bar-left"></span> Retroceder </button>
             </div>
         </div>
@@ -82,15 +83,9 @@
         }
     }
 
-    public bool Validar()
-    {
-        Existe = (tecnicoServies.Listar(t => t.Nombre.ToLower() == tecnico.Nombre.ToLower() && t.TecnicoId != tecnico.TecnicoId).Any());
-        return Existe;
-    }
-
     public async Task Guardar()
     {
-        if (Validar())
+        if (await Validar())
         {
             return;
         }
@@ -112,5 +107,12 @@
     private void Retroceder()
     {
         navigationManager.NavigateTo("/Create");
+    }
+
+    public async Task<bool> Validar()
+    {
+        var listaTecnicos = await tecnicoServies.Listar(t => t.Nombre.ToLower() == tecnico.Nombre.ToLower() && t.TecnicoId != tecnico.TecnicoId);
+        Existe = listaTecnicos.Any();
+        return Existe;
     }
 }
