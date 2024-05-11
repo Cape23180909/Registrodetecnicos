@@ -1,5 +1,6 @@
 ﻿@page "/Create"
 @inject TecnicoServies tecnicoServies
+@inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
 <EditForm Model="ListaTecnicos" class="border shadow-lg p-3 rounded">
@@ -42,8 +43,8 @@
                             </a>
                         </td>
                         <td>
-                            <a href="/Prioridad/Edit/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-editar">
-                                <span class="bi bi-marker-tip" style="font-size: 2rem;"></span>
+                            <a href="/Create4/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-editar">
+                                <span class="bi bi-pencil-square" style="font-size: 2rem;"></span>
                             </a>
                         </td>
                         <td>
@@ -57,9 +58,7 @@
         </table>
     </div>
     <div class="card-footer text-end">
-        <button type="button" class="btn btn-danger" @onclick="() => Eliminar(-1)">
-            Eliminar <i class="bi bi-trash" />
-        </button>
+        <p> Total de Tecnicos: @ListaTecnicos.Count </p>
     </div>
 </EditForm>
 

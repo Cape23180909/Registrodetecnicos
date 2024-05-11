@@ -1,23 +1,54 @@
 ﻿@page "/Create4"
-@page "/Tecnico/Create/{TecnicoId:int}"
+@page "/Create4/{TecnicoId:int}"
 @inject TecnicoServies tecnicoServies
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
-<EditForm Model="tecnicos" OnInvalidSubmit="Guardar" OnSubmit="Guardar">
+<EditForm Model="tecnicos" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
-    <div class="card shadow-lg border-0 rounded" style="background-color: #f8f9fa;">
-        <div class="card-header bg-primary text-white" style="text-align: center;">
-            <h3> <i class="fas fa-clipboard-list"></i> Editar técnico</h3>
+    <div class="card">
+        <div class="card-header bg-primary text-white text-center py-2 rounded">
+            <h3> <i class="fas fa-clipboard-list"></i> Registro de Tecnicos</h3>
         </div>
+
         <div class="card-body">
-            <!-- Resto del formulario -->
+            <!-- TecnicoId -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="TecnicoId" class="form-label">TecnicoId:</label>
+                    <div class="input-group">
+                        <div style="width: 40%; height: 1em;">
+                            <InputNumber @bind-Value="tecnicos.TecnicoId" class="form-control" style="font-size: 0.8em;" aria-describedby="BotonBuscar" />
+                        </div>
+                        <ValidationMessage For="@(() => tecnicos.TecnicoId)" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nombres -->
+            <div class="mb-3">
+                <label for="Nombres" class="form-label">Nombre:</label>
+                <InputText @bind-Value="tecnicos.Nombre" class="form-control" />
+                <ValidationMessage For="@(() => tecnicos.Nombre)" />
+                @if (Existe)
+                {
+                    <p class="text-danger">Ya existe una persona que tiene este nombre.</p>
+                }
+            </div>
+
+            <!-- SueldoHora -->
+            <div class="mb-3">
+                <label> SueldoHora </label>
+                <InputNumber @bind-Value="tecnicos.Sueldohora" class="form-control" />
+                <ValidationMessage For="@(() => tecnicos.Sueldohora)" />
+            </div>
         </div>
+
         <div class="card-footer bg-light d-flex justify-content-center mt-3">
             <div class="btn-group">
                 <button type="button" class="btn btn-outline-primary ml-2" @onclick="Nuevo"><span class="bi bi-plus"></span> Nuevo </button>
                 <button type="submit" class="btn btn-outline-success ml-2"><span class="bi bi-check-circle-fill"></span> Guardar </button>
-                <a href="/Prioridad/Index/" class="btn btn-outline-danger"><span class="bi bi-arrow-bar-left"></span> Retroceder </a>
+                <button type="button" class="btn btn-outline-danger" @onclick="Retroceder"><span class="bi bi-arrow-bar-left"></span> Retroceder </button>
             </div>
         </div>
     </div>
@@ -83,5 +114,10 @@
     {
         var eliminado = await tecnicoServies.Eliminar(tecnicos.TecnicoId);
         Nuevo();
+    }
+
+    private void Retroceder()
+    {
+        navigationManager.NavigateTo("/Create4");
     }
 }
