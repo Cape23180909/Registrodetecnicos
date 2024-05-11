@@ -1,0 +1,88 @@
+﻿@page "/Create1"
+@page "/Tecnico/Create/{TecnicoId:int}"
+@inject TecnicoServies tecnicoServies
+@inject NavigationManager navigationManager
+@rendermode InteractiveServer
+
+<PageTitle>Eliminar Prioridad</PageTitle>
+
+<div class="container">
+    <div class="card shadow-header">
+        
+        <div class="card-header  bg-primary text-white text-center py-2 rounded">
+            <h3><strong>Eliminar Prioridad</strong></h3>
+        </div>
+        <div class="card-header">
+            <h3 class="text-danger">¿Estás seguro de que quieres eliminar la prioridad?</h3>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card shadow-lg">
+                        <div class="card-header">
+                            <h3 class="text-center"><strong>Datos de la prioridad</strong></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="border-primary border-2 borde">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <ul class="list-unstyled">
+                                                <li><strong>TecnicoId:</strong> @tecnicos.TecnicoId</li>
+                                                <li><strong>Nombre:</strong> @tecnicos.Nombre</li>
+                                                <li><strong>Días Compromiso:</strong> @tecnicos.Sueldohora</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-footer">
+            <button type="button" class="btn btn-outline-danger" @onclick="@EliminarPrioridad"><i class="bi bi-trash-fill"></i> Eliminar</button>
+            <button type="button" class="btn btn-outline-primary" @onclick="Volver"><i class="bi bi-box-arrow-left"></i> Volver</button>
+        </div>
+    </div>
+</div>
+
+@if (tecnicos == null)
+{
+    <p>Tecnico no encontrado.</p>
+}
+
+@code {
+    [Parameter]
+    public int TecnicoId { get; set; }
+    public Tecnicos? tecnicos { get; set; } = new Tecnicos();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (TecnicoId != 0)
+        {
+            tecnicos = await tecnicoServies.Buscar(TecnicoId);
+        }
+    }
+
+    public async Task EliminarPrioridad()
+    {
+        if (TecnicoId == 0 || tecnicos == null)
+        {
+            return;
+        }
+
+        if (await tecnicoServies.Eliminar(TecnicoId))
+        {
+            Volver();
+        }
+    }
+
+    public void Volver()
+    {
+        navigationManager.NavigateTo("/Tecnico/Index");
+    }
+}

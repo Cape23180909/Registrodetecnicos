@@ -10,7 +10,7 @@ using RegistrodeTecnicos.Pages.DAL;
 namespace RegistrodeTecnicos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240509040612_Inicial")]
+    [Migration("20240511001901_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -21,7 +21,7 @@ namespace RegistrodeTecnicos.Migrations
 
             modelBuilder.Entity("RegistrodeTecnicos.Models.Tecnicos", b =>
                 {
-                    b.Property<int>("TecnicosId")
+                    b.Property<int>("TecnicoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -32,7 +32,7 @@ namespace RegistrodeTecnicos.Migrations
                     b.Property<float>("Sueldohora")
                         .HasColumnType("REAL");
 
-                    b.HasKey("TecnicosId");
+                    b.HasKey("TecnicoId");
 
                     b.ToTable("Tecnicos");
                 });
