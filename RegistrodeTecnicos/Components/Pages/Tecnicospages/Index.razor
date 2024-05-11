@@ -18,7 +18,6 @@
         </div>
     </div>
     <div class="table-responsive">
-
         <table class="table table-bordered text-center">
             <thead class="bg-primary text-white">
                 <tr>
@@ -43,12 +42,12 @@
                             </a>
                         </td>
                         <td>
-                            <a href="/Prioridad/Details/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-detalle">
+                            <a href="/Create2/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-detalle">
                                 <span class="bi bi-info-circle-fill" style="font-size: 2rem;"></span>
                             </a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger ml-1" @onclick="() => Eliminar(p.TecnicoId)">
+                            <button type="button" class="btn btn-danger ml-1" @onclick="() => ConfirmarEliminar(p.TecnicoId)">
                                 Eliminar <i class="bi bi-trash" />
                             </button>
                         </td>
@@ -70,8 +69,8 @@
         ListaTecnicos = tecnicoServies.Listar(c => true);
     }
 
-    private void Eliminar(int tecnicoId)
+    public void ConfirmarEliminar(int tecnicoId)
     {
-
+        navigationManager.NavigateTo($"/Create1/{tecnicoId}");
     }
 }

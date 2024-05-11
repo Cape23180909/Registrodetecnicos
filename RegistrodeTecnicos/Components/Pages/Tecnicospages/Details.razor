@@ -1,12 +1,11 @@
-﻿@page "/Create2"
-@page "/Tecnico/Create/{TecnicoId:int}"
+﻿@page "/Create2/{TecnicoId:int}"
 @inject TecnicoServies tecnicoServies
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
-<PageTitle>Detalles de Prioridades</PageTitle>
+<PageTitle>Detalles del tecnico</PageTitle>
 
-@if (tecnicoServies != null)
+@if (tecnico != null)
 {
     <div class="container">
         <div class="card shadow-header">
@@ -19,9 +18,9 @@
 
                         <div class="card-body">
                             <ul class="list-unstyled">
-                                <li><strong>PrioridadId:</strong> @tecnico.TecnicoId</li>
-                                <li><strong>Descripción:</strong> @tecnico.Nombre</li>
-                                <li><strong>Días Compromiso:</strong> @tecnico.Sueldohora</li>
+                                <li><strong>TecnicoId:</strong> @tecnico.TecnicoId</li>
+                                <li><strong>Nombre:</strong> @tecnico.Nombre</li>
+                                <li><strong>SueldoHora:</strong> @tecnico.Sueldohora</li>
                             </ul>
                         </div>
 
@@ -36,23 +35,21 @@
 }
 else
 {
-    <p>Prioridad no encontrada.</p>
+    <p>Tecnico no encontrado.</p>
 }
-
-
 
 @code {
     [Parameter]
-    public int TecnicosId { get; set; }
-    public Tecnicos? tecnico { get; set; } = new Tecnicos();
+    public int TecnicoId { get; set; }
+    public Tecnicos? tecnico { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        tecnico = await tecnicoServies.Buscar(TecnicosId);
+        tecnico = await tecnicoServies.Buscar(TecnicoId);
     }
 
     public void Volver()
     {
-        navigationManager.NavigateTo("/Pri/Index");
+        navigationManager.NavigateTo("/Create");
     }
 }
