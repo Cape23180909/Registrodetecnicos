@@ -18,15 +18,15 @@
         </div>
     </div>
     <div class="table-responsive">
-        <!-- Agregamos esta clase para hacer la tabla responsive -->
+
         <table class="table table-bordered text-center">
             <thead class="bg-primary text-white">
                 <tr>
                     <th>TecnicoId</th>
                     <th>Nombre</th>
                     <th>SueldoHora</th>
-                    <th>Ver</th>
                     <th>Editar</th>
+                    <th>Detalle</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
@@ -38,13 +38,13 @@
                         <td>@p.Nombre</td>
                         <td>@p.Sueldohora</td>
                         <td>
-                            <a href="/Prioridad/Details/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-detalle">
-                                <span class="bi bi-info-circle-fill" style="font-size: 2rem;"></span>
+                            <a href="/Create4/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-editar">
+                                <span class="bi bi-pencil-square" style="font-size: 2rem;"></span>
                             </a>
                         </td>
                         <td>
-                            <a href="/Create4/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-editar">
-                                <span class="bi bi-pencil-square" style="font-size: 2rem;"></span>
+                            <a href="/Prioridad/Details/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-detalle">
+                                <span class="bi bi-info-circle-fill" style="font-size: 2rem;"></span>
                             </a>
                         </td>
                         <td>
@@ -72,6 +72,6 @@
 
     private void Eliminar(int tecnicoId)
     {
-        // Aquí puedes implementar la lógica para eliminar el técnico con el ID proporcionado
+
     }
 }

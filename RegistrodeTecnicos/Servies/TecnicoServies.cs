@@ -70,18 +70,5 @@ namespace RegistrodeTecnicos.Servies
         {
             return Contexto.Tecnicos.AsNoTracking().Where(criterio).ToList ();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
