@@ -7,10 +7,12 @@ namespace RegistrodeTecnicos.Models
         [Key]
 
         public int TecnicoId { get; set; }
+
         [Required(ErrorMessage = "El campo no esta lleno")] 
-        public string Nombre { get; set; }
+        public string? Nombre { get; set; }
+
         [Required(ErrorMessage = "El campo no esta lleno")]
-        public float Sueldohora { get; set; }
+        public float? Sueldohora { get; set; }
        
 
 
