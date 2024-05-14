@@ -15,14 +15,11 @@ namespace RegistrodeTecnicos
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
-            //Obtenemos el ConStr para usarlo en el contexto
+            // Agregamos el contexto al builder con el ConStr// Agregamos el contexto al builder con el ConStr //Inyectar el servies  //Obtenemos el ConStr para usarlo en el contexto
             var ConStr = builder.Configuration.GetConnectionString("ConStr");
-
-            // Agregamos el contexto al builder con el ConStr
             builder.Services.AddDbContext<Contexto>(Options => Options.UseSqlite(ConStr));
-
-            //Inyectar el servies
             builder.Services.AddScoped<TecnicoServies>();
+            builder.Services.AddBlazorBootstrap();
 
             var app = builder.Build();
 
