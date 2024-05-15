@@ -24,8 +24,8 @@
                     <th>T&eacute;cnicoId</th>
                     <th>Nombre</th>
                     <th>SueldoHora</th>
-                    <th>Editar</th>
                     <th>Detalle</th>
+                    <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
@@ -37,13 +37,13 @@
                         <td>@p.Nombre</td>
                         <td>@p.Sueldohora</td>
                         <td>
-                            <a href="/Tecnico/Edit/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-editar">
-                                <span class="bi bi-pencil-square" style="font-size: 2rem;"></span>
+                            <a href="/Tecnico/Details/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-detalle">
+                                <span class="bi bi-info-circle-fill" style="font-size: 2rem;"></span>
                             </a>
                         </td>
                         <td>
-                            <a href="/Tecnico/Details/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-detalle">
-                                <span class="bi bi-info-circle-fill" style="font-size: 2rem;"></span>
+                            <a href="/Tecnico/Edit/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-editar">
+                                <span class="bi bi-pencil-square" style="font-size: 2rem;"></span>
                             </a>
                         </td>
                         <td>
@@ -73,6 +73,4 @@
     {
         navigationManager.NavigateTo($"/Tecnico/Delete/TecnicoId={tecnicoId}");
     }
-
-
 }
