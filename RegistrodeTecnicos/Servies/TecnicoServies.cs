@@ -18,7 +18,7 @@ namespace RegistrodeTecnicos.Servies
         //Metodo Existente
         public async Task<bool> Existe (int TecnicoId)
         {
-            return await Contexto.Tecnicos.AnyAsync(p => p.TecnicoId == TecnicoId);
+            return await Contexto.Tecnicos.AnyAsync(t => t.TecnicoId == TecnicoId);
             
         }
 
@@ -54,7 +54,7 @@ namespace RegistrodeTecnicos.Servies
 
         public async Task<bool> Eliminar (int id)
         {
-            var Tecnicos = await Contexto.Tecnicos.Where(P => P.TecnicoId == id).ExecuteDeleteAsync();
+            var Tecnicos = await Contexto.Tecnicos.Where(t => t.TecnicoId == id).ExecuteDeleteAsync();
             return Tecnicos > 0;
         }
 
@@ -64,7 +64,7 @@ namespace RegistrodeTecnicos.Servies
         {
             return await Contexto.Tecnicos
                 .AsNoTracking()
-                .FirstOrDefaultAsync (P => P.TecnicoId == id);
+                .FirstOrDefaultAsync (t => t.TecnicoId == id);
         }
 
         //Metodo listar
