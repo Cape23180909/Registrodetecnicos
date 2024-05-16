@@ -10,5 +10,7 @@ namespace RegistrodeTecnicos.Pages.DAL
             : base(options) { }
 
         public DbSet<Tecnicos> Tecnicos {  get; set; } 
+
+        public DbSet<TipoTecnicos> tipoTecnicos { get; set; }
     }
 }
