@@ -6,8 +6,9 @@ namespace RegistrodeTecnicos.Models
     {
         [Key]
 
-        public int TecnicoId { get; set; }
-        [Required(ErrorMessage = "El campo no esta lleno del tipo tecnico")]
+        public int TipoId { get; set; }
         public string Descripcion { get; set; }
+      
+
     }
 }
