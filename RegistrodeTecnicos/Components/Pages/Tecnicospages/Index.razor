@@ -31,24 +31,24 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var p in ListaTecnicos)
+                @foreach (var t in ListaTecnicos)
                 {
                     <tr>
-                        <td>@p.TecnicoId</td>
-                        <td>@p.Nombre</td>
-                        <td>@p.Sueldohora</td>
+                        <td>@t.TecnicoId</td>
+                        <td>@t.Nombre</td>
+                        <td>@t.Sueldohora</td>
                         <td>
-                            <a href="/Tecnico/Details/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-detalle">
+                            <a href="/Tecnico/Details/@t.TecnicoId" style="border: none; background-color: transparent;" class="btn-detalle">
                                 <span class="bi bi-info-circle-fill" style="font-size: 2rem;"></span>
                             </a>
                         </td>
                         <td>
-                            <a href="/Tecnico/Edit/@p.TecnicoId" style="border: none; background-color: transparent;" class="btn-editar">
+                            <a href="/Tecnico/Edit/@t.TecnicoId" style="border: none; background-color: transparent;" class="btn-editar">
                                 <span class="bi bi-pencil-square" style="font-size: 2rem;"></span>
                             </a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger ml-1" @onclick="() => IrEliminar(p.TecnicoId)">
+                            <button type="button" class="btn btn-danger ml-1" @onclick="() => IrEliminar(t.TecnicoId)">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </td>
