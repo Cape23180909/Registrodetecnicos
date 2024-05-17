@@ -57,7 +57,7 @@
     {
         tecnico = new TipoTecnicos();
     }
-    
+
     public async Task<bool> Validar()
     {
         var listaTecnicos = await tipotecnicoServies.Listar(t => t.Descripcion.ToLower() == tecnico.Descripcion.ToLower() && t.TipoId != tecnico.TipoId);
