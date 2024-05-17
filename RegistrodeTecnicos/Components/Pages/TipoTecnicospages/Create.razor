@@ -23,10 +23,9 @@
             <div class="form-group">
                 <label for="Descripcion">Descripcion</label>
                 <InputText id="Descripcion" class="form-control" @bind-Value="tecnico.Descripcion" />
-                <!-- Mostrar mensaje de error de validación -->
                 <ValidationMessage For="@(() => tecnico.Descripcion)" />
             </div>
-
+            @*Volver*@
             <div class="text-center">
                 <button type="submit" class="btn btn-primary mx-2">Guardar</button>
                 <NavLink href="/TipoTecnicos/index" class="btn btn-primary mx-2">Volver</NavLink>
