@@ -14,7 +14,7 @@ public class Program
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
-        // Agregamos el contexto al builder con el ConStr// Agregamos el contexto al builder con el ConStr //Inyectar el servies  //Obtenemos el ConStr para usarlo en el contexto
+       
         var ConStr = builder.Configuration.GetConnectionString("ConStr");
         builder.Services.AddDbContext<Contexto>(Options => Options.UseSqlite(ConStr));
         builder.Services.AddScoped<TecnicoServies>();
