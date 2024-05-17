@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RegistrodeTecnicos.Models
 {
@@ -13,8 +14,9 @@ namespace RegistrodeTecnicos.Models
 
         [Required(ErrorMessage = "El campo no esta lleno")]
         public float? Sueldohora { get; set; }
-       
 
+        //[ForeignKey("TipoTecnico")]
+       // public int TipoId { get; set; }
 
     }
 }
