@@ -14,7 +14,6 @@ public class Program
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
-       
         var ConStr = builder.Configuration.GetConnectionString("ConStr");
         builder.Services.AddDbContext<Contexto>(Options => Options.UseSqlite(ConStr));
         builder.Services.AddScoped<TecnicoServies>();
