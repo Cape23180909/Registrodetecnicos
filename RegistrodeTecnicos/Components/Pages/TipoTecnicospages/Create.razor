@@ -3,12 +3,13 @@
 @inject TipoTecnicoServies tipotecnicoServies
 
 <PageTitle>Registro de TiposTecnicos</PageTitle>
+
 <EditForm Model="tecnico" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
 
     <div class="card">
         <div class="card-header bg-primary text-white text-center py-2 rounded">
-            <h3><i class="fas fa-clipboard-list"></i> Registro de tipoT&eacute;cnicos</h3>
+            <h3><i class="fas fa-clipboard-list"></i> Registro de tipoTécnicos</h3>
         </div>
         <div class="card-body">
             <!-- TipoId -->
@@ -22,6 +23,7 @@
             <div class="form-group">
                 <label for="Descripcion">Descripcion</label>
                 <InputText id="Descripcion" class="form-control" @bind-Value="tecnico.Descripcion" />
+                <!-- Mostrar mensaje de error de validación -->
                 <ValidationMessage For="@(() => tecnico.Descripcion)" />
             </div>
 
@@ -47,6 +49,7 @@
         if (guardo)
         {
             Nuevo();
+            // Redireccionar automáticamente a la página de consulta después de guardar
             navigationManager.NavigateTo("/TipoTecnicos/index");
         }
     }
@@ -55,7 +58,7 @@
     {
         tecnico = new TipoTecnicos();
     }
-
+    
     public async Task<bool> Validar()
     {
         var listaTecnicos = await tipotecnicoServies.Listar(t => t.Descripcion.ToLower() == tecnico.Descripcion.ToLower() && t.TipoId != tecnico.TipoId);
