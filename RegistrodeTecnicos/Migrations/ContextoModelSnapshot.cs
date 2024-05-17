@@ -35,6 +35,21 @@ namespace RegistrodeTecnicos.Migrations
 
                     b.ToTable("Tecnicos");
                 });
+
+            modelBuilder.Entity("RegistrodeTecnicos.Models.TipoTecnicos", b =>
+                {
+                    b.Property<int>("TipoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("TipoId");
+
+                    b.ToTable("TipoTecnicos");
+                });
 #pragma warning restore 612, 618
         }
     }
