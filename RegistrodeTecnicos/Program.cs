@@ -18,6 +18,7 @@ public class Program
         var ConStr = builder.Configuration.GetConnectionString("ConStr");
         builder.Services.AddDbContext<Contexto>(Options => Options.UseSqlite(ConStr));
         builder.Services.AddScoped<TecnicoServies>();
+        builder.Services.AddScoped<TipoTecnicoServies>();
         builder.Services.AddBlazorBootstrap();
 
         var app = builder.Build();
