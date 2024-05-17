@@ -1,10 +1,11 @@
 ﻿@page "/TipoTecnico/Create"
 @inject NavigationManager navigationManager
 @inject TipoTecnicoServies tipotecnicoServies
+@rendermode InteractiveServer
 
 <PageTitle>Registro de TiposTecnicos</PageTitle>
 
-<EditForm Model="tecnico" OnValidSubmit="Guardar">
+<EditForm Model="tecnico" OnValidSubmit="Guardar" formname="crearTipoTecnicoForm">
     <DataAnnotationsValidator />
 
     <div class="card">
@@ -22,10 +23,14 @@
             <!-- Descripcion -->
             <div class="form-group">
                 <label for="Descripcion">Descripcion</label>
-                <InputText id="Descripcion" class="form-control" @bind-Value="tecnico.Descripcion" />
+                <InputText id="Descripcion" class="form-control" @bind-Value="tecnico.Descripcion" @oninput="()=> mostrarMensajeError = false" />
+                @if (mostrarMensajeError)
+                {
+                    <div class="text-danger">El campo no está lleno.</div>
+                }
                 <ValidationMessage For="@(() => tecnico.Descripcion)" />
             </div>
-            @*Volver*@
+            <!-- volver -->
             <div class="text-center">
                 <button type="submit" class="btn btn-primary mx-2">Guardar</button>
                 <NavLink href="/TipoTecnicos/index" class="btn btn-primary mx-2">Volver</NavLink>
@@ -36,13 +41,15 @@
 
 @code {
     private TipoTecnicos tecnico = new TipoTecnicos();
+    private bool mostrarMensajeError = false; // Variable para controlar si se muestra el mensaje de error
 
     private async Task Guardar()
     {
-        if (await Validar())
-        {
-            return;
-        }
+        // if (await Validar())
+        // {
+        //     mostrarMensajeError = true; // Mostrar el mensaje de error solo si hay algún error de validación
+        //     return;
+        // }
 
         var guardo = await tipotecnicoServies.Guardar(tecnico);
         if (guardo)
@@ -58,10 +65,14 @@
         tecnico = new TipoTecnicos();
     }
 
+    //Borrar este metodo ya que esta en el servies
     public async Task<bool> Validar()
     {
+        if (string.IsNullOrWhiteSpace(tecnico.Descripcion))
+            return true; // Retorna verdadero si la descripción está vacía
+
         var listaTecnicos = await tipotecnicoServies.Listar(t => t.Descripcion.ToLower() == tecnico.Descripcion.ToLower() && t.TipoId != tecnico.TipoId);
         var Existe = listaTecnicos.Any();
-        return Existe;
-    }
+        return Existe;
+    }
 }
