@@ -9,8 +9,8 @@ namespace RegistrodeTecnicos.Pages.DAL
         public Contexto(DbContextOptions<Contexto> options)
             : base(options) { }
 
-        public DbSet<Tecnicos> Tecnicos {  get; set; } 
+        public DbSet<Tecnicos> Tecnicos { get; set; }
 
-        public DbSet<TipoTecnicos> tipoTecnicos { get; set; }
+        public DbSet<TipoTecnicos> TipoTecnicos { get; set; }
     }
 }
