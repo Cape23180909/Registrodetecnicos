@@ -3,28 +3,52 @@
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
+<PageTitle>Consulta Técnicos</PageTitle>
+
 <EditForm Model="ListaTecnicos" class="border shadow-lg p-3 rounded">
     <div class="card-header bg-primary text-white text-center py-2 rounded">
-        <h3 style="font-weight: bold;" class="mb-0 font-weight-bold">Consulta T&eacute;cnicos</h3>
+        <h3 style="font-weight: bold;" class="mb-0 font-weight-bold">Consulta Técnicos</h3>
     </div>
+
+    <div class="row mb-3 align-items-end">
+        <div class="col-md-3">
+            <label for="Filtro" class="form-label">Filtrar por:</label>
+            <select @bind="filtro" class="form-select">
+                <option value="id">ID</option>
+                <option value="nombre">Nombre</option>
+                <option value="diascompromiso">Tipo técnico</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="ValorFiltro" class="form-label">Búsqueda:</label>
+            <div class="input-group">
+                <input @bind="valorFiltro" class="form-control" placeholder="Buscar" />
+                <button @onclick="Buscar" class="btn btn-outline-primary" type="button">
+                    <span class="bi bi-search"></span> Buscar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="card-body">
         <div class="row">
             <div class="col-md-9"></div>
             <div class="col-md-3 text-end">
                 <a href="/Tecnico/create" class="btn btn-success" type="button">
                     <i class="bi bi-pencil-square"></i>
-                    <span class="bi bi-floppy-nav-menu" aria-hidden="/Tecnico/create"></span> Crear
+                    Crear
                 </a>
             </div>
         </div>
     </div>
+
     <div class="table-responsive">
         <table class="table table-bordered text-center">
             <thead class="bg-primary text-white">
                 <tr>
-                    <th>T&eacute;cnicoId</th>
+                    <th>TécnicoId</th>
                     <th>Nombre</th>
-                    <th>Tipo Tecnico</th>
+                    <th>Tipo Técnico</th>
                     <th>SueldoHora</th>
                     <th>Detalle</th>
                     <th>Editar</th>
@@ -60,21 +84,45 @@
         </table>
     </div>
     <div class="card-footer text-start">
-        <p> Total de T&eacute;cnicos: @ListaTecnicos.Count </p>
+        <p>Total de Técnicos: @ListaTecnicos.Count</p>
     </div>
-
 </EditForm>
 
 @code {
-    public List<Tecnicos> ListaTecnicos = new List<Tecnicos>();
+    public List<Tecnicos> ListaTecnicos { get; set; } = new List<Tecnicos>();
+    private string filtro = "id";
+    private string valorFiltro;
 
-    protected override async void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         ListaTecnicos = await tecnicoServies.Listar(c => c.TecnicoId > 0);
     }
 
-    public void IrEliminar(int tecnicoId)
+    private async Task Buscar()
     {
-        navigationManager.NavigateTo($"/Tecnico/Delete/TecnicoId={tecnicoId}");
+        if (!string.IsNullOrWhiteSpace(valorFiltro))
+        {
+            if (filtro == "id" && int.TryParse(valorFiltro, out int TecnicoId))
+            {
+                ListaTecnicos = await tecnicoServies.Listar(t => t.TecnicoId == TecnicoId);
+            }
+            else if (filtro == "nombre")
+            {
+                ListaTecnicos = await tecnicoServies.Listar(t => t.Nombre.Contains(valorFiltro, StringComparison.OrdinalIgnoreCase));
+            }
+            else if (filtro == "diascompromiso" && int.TryParse(valorFiltro, out int TipoId))
+            {
+                ListaTecnicos = await tecnicoServies.Listar(t => t.TipoId == TipoId);
+            }
+        }
+        else
+        {
+            ListaTecnicos = await tecnicoServies.Listar(p => true);
+        }
+    }
+
+    private void IrEliminar(int tecnicoId)
+    {
+        navigationManager.NavigateTo($"/Tecnico/Delete/{tecnicoId}");
     }
 }
