@@ -5,11 +5,18 @@
 namespace RegistrodeTecnicos.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateTipoTecnicosTable : Migration
+    public partial class TipoTecnico : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<int>(
+                name: "TipoId",
+                table: "Tecnicos",
+                type: "INTEGER",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.CreateTable(
                 name: "TipoTecnicos",
                 columns: table => new
@@ -29,6 +36,10 @@ namespace RegistrodeTecnicos.Migrations
         {
             migrationBuilder.DropTable(
                 name: "TipoTecnicos");
+
+            migrationBuilder.DropColumn(
+                name: "TipoId",
+                table: "Tecnicos");
         }
     }
 }

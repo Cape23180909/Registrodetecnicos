@@ -31,6 +31,9 @@ namespace RegistrodeTecnicos.Migrations
                         .IsRequired()
                         .HasColumnType("REAL");
 
+                    b.Property<int>("TipoId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("TecnicoId");
 
                     b.ToTable("Tecnicos");
