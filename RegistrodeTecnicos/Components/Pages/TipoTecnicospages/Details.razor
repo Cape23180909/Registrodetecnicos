@@ -45,7 +45,7 @@ else
         tipotecnico = await tipoTecnicoServices.Buscar(TipoId);
     }
 
-    private void Volver()
+    private async Task Volver()
     {
         navigationManager.NavigateTo("/TipoTecnicos/index");
     }
