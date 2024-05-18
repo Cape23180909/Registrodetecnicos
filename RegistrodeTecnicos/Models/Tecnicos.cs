@@ -9,15 +9,14 @@ namespace RegistrodeTecnicos.Models
 
         public int TecnicoId { get; set; }
 
-        [Required(ErrorMessage = "El campo no esta lleno")] 
+        [Required(ErrorMessage = "El campo no esta lleno")]
         public string? Nombre { get; set; }
 
         [Required(ErrorMessage = "El campo no esta lleno")]
         public float? Sueldohora { get; set; }
 
-        //[ForeignKey("TipoTecnico")]
-       // public int TipoId { get; set; }
-
+        [ForeignKey("TipoTecnico")]
+        public int TipoId { get; set; }
     }
 }
 
