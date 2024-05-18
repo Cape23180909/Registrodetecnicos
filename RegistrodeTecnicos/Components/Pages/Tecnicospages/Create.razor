@@ -82,7 +82,7 @@
         tipos = await tipoTecnicoServies.Listar(t => t.TipoId > 0);
     }
 
-    public void Nuevo()
+    public async Task Nuevo()
     {
         tecnico = new Tecnicos();
         Existe = false;
@@ -124,7 +124,7 @@
         Nuevo();
     }
 
-    private void Retroceder()
+    private async Task Retroceder()
     {
         navigationManager.NavigateTo("/Tecnico/index");
     }
