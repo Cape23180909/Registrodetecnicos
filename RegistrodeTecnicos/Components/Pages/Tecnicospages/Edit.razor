@@ -68,7 +68,7 @@
         }
     }
 
-    public void Nuevo()
+    public async Task Nuevo()
     {
         tecnicos = new Tecnicos();
         Existe = false;
@@ -109,7 +109,7 @@
         Nuevo();
     }
 
-    private void Retroceder()
+    private async Task Retroceder()
     {
         navigationManager.NavigateTo("/Tecnico/index");
     }
