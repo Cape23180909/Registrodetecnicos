@@ -42,14 +42,14 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="@t.TipoId" style="border: none; background-color: transparent;" class="btn-editar">
+                                <a href="/TipoTecnico/Edit/@t.TipoId" style="border: none; background-color: transparent;" class="btn-editar">
                                     <span class="bi bi-pencil-square" style="font-size: 2rem;"></span>
                                 </a>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger ml-1" @onclick="() => IrEliminar(t.TipoId)">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                <a href="/TipoTecnico/Delete/@t.TipoId" class="btn btn-danger ml-1">
+                                    <i class="bi bi-trash"></i> 
+                                </a>
                             </td>
                         </tr>
                     }
@@ -68,10 +68,5 @@
     protected override async Task OnInitializedAsync()
     {
         ListaTipoTecnicos = await tipoTecnicoServies.Listar(t => t.TipoId > 0);
-    }
-
-    public void IrEliminar(int tipoTecnicoId)
-    {
-        navigationManager.NavigateTo($"/TipoTecnicos/Delete/{tipoTecnicoId}");
     }
 }
