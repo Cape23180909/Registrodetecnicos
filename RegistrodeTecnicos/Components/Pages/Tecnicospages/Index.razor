@@ -137,7 +137,7 @@
         }
     }
 
-    private void IrEliminar(int tecnicoId)
+    private async Task IrEliminar(int tecnicoId)
     {
         navigationManager.NavigateTo($"/Tecnico/Delete/TecnicoId={tecnicoId}");
     }
