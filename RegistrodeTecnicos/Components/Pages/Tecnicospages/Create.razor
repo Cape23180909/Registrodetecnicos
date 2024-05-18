@@ -29,9 +29,9 @@
             <!-- Tipos -->
             <div class="mb-3">
                 <label> Tipo de Tecnico </label>
-                <InputSelect @bind-Value="tecnico.TipoId" class="form-select" >
+                <InputSelect @bind-Value="tecnico.TipoId" class="form-select">
                     <option value="0">Elija un tipo de tecnico</option>
-                    @foreach(var tipo in tipos)
+                    @foreach (var tipo in tipos)
                     {
                         <option value="@tipo.TipoId">@tipo.Descripcion</option>
                     }
@@ -60,7 +60,7 @@
 
         <div class="card-footer bg-light d-flex justify-content-center mt-3">
             <div class="btn-group">
-               
+
                 <button type="submit" class="btn btn-outline-success ml-2"><span class="bi bi-check-circle-fill"></span> Guardar </button>
                 <button type="button" class="btn btn-outline-danger" @onclick="Eliminar"><span class="bi bi-trash-fill"></span> Eliminar </button>
                 <button type="button" class="btn btn-outline-danger" @onclick="Retroceder"><span class="bi bi-arrow-bar-left"></span> Retroceder </button>

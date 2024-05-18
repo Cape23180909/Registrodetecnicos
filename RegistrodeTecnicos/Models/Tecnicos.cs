@@ -17,6 +17,8 @@ namespace RegistrodeTecnicos.Models
 
         [ForeignKey("TipoTecnico")]
         public int TipoId { get; set; }
+
+
     }
 }
 

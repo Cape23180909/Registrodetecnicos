@@ -95,34 +95,50 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ListaTecnicos = await tecnicoServies.Listar(c => c.TecnicoId > 0);
+        try
+        {
+            ListaTecnicos = await tecnicoServies.Listar(c => c.TecnicoId > 0);
+        }
+        catch (Exception ex)
+        {
+            // Manejo del error inicial
+            Console.WriteLine($"Error initializing: {ex.Message}");
+        }
     }
 
     private async Task Buscar()
     {
-        if (!string.IsNullOrWhiteSpace(valorFiltro))
+        try
         {
-            if (filtro == "id" && int.TryParse(valorFiltro, out int TecnicoId))
+            if (!string.IsNullOrWhiteSpace(valorFiltro))
             {
-                ListaTecnicos = await tecnicoServies.Listar(t => t.TecnicoId == TecnicoId);
+                if (filtro == "id" && int.TryParse(valorFiltro, out int TecnicoId))
+                {
+                    ListaTecnicos = await tecnicoServies.Listar(t => t.TecnicoId == TecnicoId);
+                }
+                else if (filtro == "nombre")
+                {
+                    ListaTecnicos = await tecnicoServies.Listar(t => t.Nombre.Contains(valorFiltro, StringComparison.OrdinalIgnoreCase));
+                }
+                else if (filtro == "diascompromiso" && int.TryParse(valorFiltro, out int TipoId))
+                {
+                    ListaTecnicos = await tecnicoServies.Listar(t => t.TipoId == TipoId);
+                }
             }
-            else if (filtro == "nombre")
+            else
             {
-                ListaTecnicos = await tecnicoServies.Listar(t => t.Nombre.Contains(valorFiltro, StringComparison.OrdinalIgnoreCase));
-            }
-            else if (filtro == "diascompromiso" && int.TryParse(valorFiltro, out int TipoId))
-            {
-                ListaTecnicos = await tecnicoServies.Listar(t => t.TipoId == TipoId);
+                ListaTecnicos = await tecnicoServies.Listar(p => true);
             }
         }
-        else
+        catch (Exception ex)
         {
-            ListaTecnicos = await tecnicoServies.Listar(p => true);
+            Console.WriteLine($"Error en Buscar(): {ex.Message}");
+            ListaTecnicos = new List<Tecnicos>();
         }
     }
 
     private void IrEliminar(int tecnicoId)
     {
-        navigationManager.NavigateTo($"/Tecnico/Delete/{tecnicoId}");
+        navigationManager.NavigateTo($"/Tecnico/Delete/TecnicoId={tecnicoId}");
     }
 }
