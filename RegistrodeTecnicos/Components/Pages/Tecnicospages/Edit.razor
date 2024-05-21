@@ -113,7 +113,7 @@
     {
         navigationManager.NavigateTo("/Tecnico/index");
     }
-
+    
     public async Task<bool> Validar()
     {
         var listaTecnicos = await tecnicoService.Listar(t => t.Nombre.ToLower() == tecnicos.Nombre.ToLower() && t.TecnicoId != tecnicos.TecnicoId);
