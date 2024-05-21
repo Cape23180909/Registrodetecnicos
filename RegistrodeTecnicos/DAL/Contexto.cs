@@ -1,16 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RegistrodeTecnicos.Models;
 
-namespace RegistrodeTecnicos.Pages.DAL
+namespace RegistrodeTecnicos.Pages.DAL;
+public class Contexto : DbContext
 {
-    public class Contexto : DbContext
-    {
-
-        public Contexto(DbContextOptions<Contexto> options)
-            : base(options) { }
-
-        public DbSet<Tecnicos> Tecnicos { get; set; }
-
-        public DbSet<TipoTecnicos> TipoTecnicos { get; set; }
-    }
+    public Contexto(DbContextOptions<Contexto> options)
+        : base(options) { }
+    public DbSet<Tecnicos> Tecnicos { get; set; }
+    public DbSet<TiposTecnicos> TipoTecnicos { get; set; }
 }
