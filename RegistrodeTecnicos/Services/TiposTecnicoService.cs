@@ -17,10 +17,15 @@ public class TiposTecnicoService
         _contexto = contexto;
     }
     // Método Existente
-    public async Task<bool> Existe(int TipoTecnicoId)
+    public async Task<bool> Existe(int tipoTecnicoId)
     {
         return await _contexto
-            .TipoTecnicos.AnyAsync(t => t.TipoId == TipoTecnicoId);
+            .TipoTecnicos.AnyAsync(t => t.TipoId == tipoTecnicoId);
+    }
+    public async Task<bool> Existe(int tipoId, string? descripcion)
+    {
+        return await _contexto.TipoTecnicos
+            .AnyAsync(t => t.TipoId != tipoId && t.Descripcion.Equals(descripcion));
     }
     // Método Insertar
     private async Task<bool> Insertar(TiposTecnicos tipoTecnicos)
