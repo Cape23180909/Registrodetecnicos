@@ -22,6 +22,12 @@ public class TecnicoService
             .AnyAsync(t => t.TecnicoId == TecnicoId);
 
     }
+    public async Task<bool> Existe(int tecnicoId, string? nombres)
+    {
+        //TODO: Unir los dos existe en uno solo para reducir duplicidad de codigo.
+        return await Contexto.Tecnicos
+            .AnyAsync(t => t.TecnicoId != tecnicoId && t.Nombre.Equals(nombres));
+    }
     // Método Insertar
     private async Task<bool> Insertar(Tecnicos tecnico)
     {
