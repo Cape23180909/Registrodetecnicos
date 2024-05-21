@@ -1,15 +1,15 @@
 ﻿@page "/Tecnico/Delete/TecnicoId={TecnicoId:int}"
 @inject TecnicoService tecnicoService
 @inject NavigationManager navigationManager
+@inject TiposTecnicoService tiposTecnicoService
 @rendermode InteractiveServer
 
-<PageTitle>Eliminar Tecnico</PageTitle>
+<PageTitle>Eliminar Técnico</PageTitle>
 
 <div class="container">
     <div class="card shadow-header">
-
-        <div class="card-header  bg-primary text-white text-center py-2 rounded">
-            <h3><strong>Eliminar T&eacute;cnico</strong></h3>
+        <div class="card-header bg-primary text-white text-center py-2 rounded">
+            <h3><strong>Eliminar Técnico</strong></h3>
         </div>
         <div class="card-header">
             <h3 class="text-danger">¿Estás seguro de que quieres eliminar este técnico?</h3>
@@ -28,9 +28,10 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <ul class="list-unstyled">
-                                                <li><strong>T&eacute;cnicoId:</strong> @tecnicos.TecnicoId</li>
-                                                <li><strong>Nombre:</strong> @tecnicos.Nombre</li>
-                                                <li><strong>SueldoHora:</strong> @tecnicos.Sueldohora</li>
+                                                <li><strong>TécnicoId:</strong> @tecnico.TecnicoId</li>
+                                                <li><strong>Nombre:</strong> @tecnico.Nombre</li>
+                                                <li><strong>SueldoHora:</strong> @tecnico.Sueldohora</li>
+                                                <li><strong>Tipo Técnico:</strong> @tipoDescripcion</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -49,7 +50,7 @@
     </div>
 </div>
 
-@if (tecnicos == null)
+@if (tecnico == null)
 {
     <p>Técnico no encontrado.</p>
 }
@@ -57,19 +58,25 @@
 @code {
     [Parameter]
     public int TecnicoId { get; set; }
-    public Tecnicos? tecnicos { get; set; } = new Tecnicos();
+    public Tecnicos? tecnico { get; set; } = new Tecnicos();
+    public string tipoDescripcion { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
         if (TecnicoId != 0)
         {
-            tecnicos = await tecnicoService.Buscar(TecnicoId);
+            tecnico = await tecnicoService.Buscar(TecnicoId);
+            if (tecnico != null)
+            {
+                var tipo = await tiposTecnicoService.Buscar(tecnico.TipoId);
+                tipoDescripcion = tipo?.Descripcion ?? "Tipo no encontrado";
+            }
         }
     }
 
     public async Task EliminarPrioridad()
     {
-        if (TecnicoId == 0 || tecnicos == null)
+        if (TecnicoId == 0 || tecnico == null)
         {
             return;
         }
