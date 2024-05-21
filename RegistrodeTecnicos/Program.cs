@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RegistrodeTecnicos.Components;
 using RegistrodeTecnicos.Pages.DAL;
-using RegistrodeTecnicos.Servies;
+using RegistrodeTecnicos.Services;
 
 namespace RegistrodeTecnicos;
 public class Program
@@ -16,8 +16,8 @@ public class Program
 
         var ConStr = builder.Configuration.GetConnectionString("ConStr");
         builder.Services.AddDbContext<Contexto>(Options => Options.UseSqlite(ConStr));
-        builder.Services.AddScoped<TecnicoServies>();
-        builder.Services.AddScoped<TipoTecnicoServies>();
+        builder.Services.AddScoped<TecnicoService>();
+        builder.Services.AddScoped<TiposTecnicoService>();
         builder.Services.AddBlazorBootstrap();
 
         var app = builder.Build();
