@@ -1,6 +1,6 @@
 ﻿@page "/Tecnico/create"
-@inject TecnicoServies tecnicoServies
-@inject TipoTecnicoServies tipoTecnicoServies
+@inject TecnicoService tecnicoService
+@inject TiposTecnicoService tipoTecnicoService
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
@@ -55,7 +55,7 @@
                 <label> SueldoHora </label>
                 <InputNumber @bind-Value="tecnico.Sueldohora" class="form-control" />
                 <ValidationMessage For="@(() => tecnico.Sueldohora)" />
-            </div> 
+            </div>
         </div>
 
         <div class="card-footer bg-light d-flex justify-content-center mt-3">
@@ -74,12 +74,12 @@
     public int TecnicoId { get; set; }
 
     public Tecnicos tecnico { get; set; } = new Tecnicos();
-    public List<TipoTecnicos> tipos = new List<TipoTecnicos>();
+    public List<TiposTecnicos> tipos = new List<TiposTecnicos>();
     private bool Existe = false;
 
     protected override async Task OnInitializedAsync()
     {
-        tipos = await tipoTecnicoServies.Listar(t => t.TipoId > 0);
+        tipos = await tipoTecnicoService.Listar(t => true);
     }
 
     public async Task Nuevo()
@@ -91,7 +91,7 @@
     public async Task Buscar()
     {
         Existe = false;
-        var tecnicoEncontrado = await tecnicoServies.Buscar(tecnico.TecnicoId);
+        var tecnicoEncontrado = await tecnicoService.Buscar(tecnico.TecnicoId);
 
         if (tecnicoEncontrado != null)
         {
@@ -105,12 +105,12 @@
 
     public async Task Guardar()
     {
-        if (await Validar())
+        if (!await Validar())
         {
             return;
         }
 
-        var guardo = await tecnicoServies.Guardar(tecnico);
+        var guardo = await tecnicoService.Guardar(tecnico);
         if (guardo)
         {
             Nuevo();
@@ -120,7 +120,7 @@
 
     public async Task Eliminar()
     {
-        var eliminado = await tecnicoServies.Eliminar(tecnico.TecnicoId);
+        var eliminado = await tecnicoService.Eliminar(tecnico.TecnicoId);
         Nuevo();
     }
 
@@ -131,8 +131,7 @@
 
     public async Task<bool> Validar()
     {
-        var listaTecnicos = await tecnicoServies.Listar(t => t.Nombre.ToLower() == tecnico.Nombre.ToLower() && t.TecnicoId != tecnico.TecnicoId);
-        Existe = listaTecnicos.Any();
-        return Existe;
+        Existe = await tecnicoService.Existe(tecnico.TecnicoId, tecnico.Nombre);
+        return !Existe;
     }
 }

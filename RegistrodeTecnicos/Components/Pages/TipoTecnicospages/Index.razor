@@ -1,5 +1,5 @@
 ﻿@page "/TipoTecnicos/index"
-@inject TipoTecnicoServies tipoTecnicoServies
+@inject TiposTecnicoService tipoTecnicoServies
 @inject NavigationManager navigationManager
 
 <PageTitle>Consulta Tipos Técnicos</PageTitle>
@@ -63,7 +63,7 @@
 </div>
 
 @code {
-    public List<TipoTecnicos> ListaTipoTecnicos = new List<TipoTecnicos>();
+    public List<TiposTecnicos> ListaTipoTecnicos = new List<TiposTecnicos>();
 
     protected override async Task OnInitializedAsync()
     {

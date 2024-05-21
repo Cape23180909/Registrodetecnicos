@@ -1,6 +1,6 @@
 ﻿@page "/Tecnico/Edit"
 @page "/Tecnico/Edit/{TecnicoId:int}"
-@inject TecnicoServies tecnicoServies
+@inject TecnicoService tecnicoService
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
@@ -77,7 +77,7 @@
     public async Task Buscar()
     {
         Existe = false;
-        var tecnicoEncontrado = await tecnicoServies.Buscar(TecnicoId);
+        var tecnicoEncontrado = await tecnicoService.Buscar(TecnicoId);
 
         if (tecnicoEncontrado != null)
         {
@@ -95,7 +95,7 @@
             return;
         }
 
-        var guardo = await tecnicoServies.Guardar(tecnicos);
+        var guardo = await tecnicoService.Guardar(tecnicos);
         if (guardo)
         {
             Nuevo();
@@ -105,7 +105,7 @@
 
     public async Task Eliminar()
     {
-        var eliminado = await tecnicoServies.Eliminar(tecnicos.TecnicoId);
+        var eliminado = await tecnicoService.Eliminar(tecnicos.TecnicoId);
         Nuevo();
     }
 
@@ -116,7 +116,7 @@
 
     public async Task<bool> Validar()
     {
-        var listaTecnicos = await tecnicoServies.Listar(t => t.Nombre.ToLower() == tecnicos.Nombre.ToLower() && t.TecnicoId != tecnicos.TecnicoId);
+        var listaTecnicos = await tecnicoService.Listar(t => t.Nombre.ToLower() == tecnicos.Nombre.ToLower() && t.TecnicoId != tecnicos.TecnicoId);
         Existe = listaTecnicos.Any();
         return Existe;
     }

@@ -1,5 +1,5 @@
 ﻿@page "/Tecnico/index"
-@inject TecnicoServies tecnicoServies
+@inject TecnicoService tecnicoService
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
@@ -91,13 +91,13 @@
 @code {
     public List<Tecnicos> ListaTecnicos { get; set; } = new List<Tecnicos>();
     private string filtro = "id";
-    private string valorFiltro;
+    private string valorFiltro = "";
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            ListaTecnicos = await tecnicoServies.Listar(c => c.TecnicoId > 0);
+            ListaTecnicos = await tecnicoService.Listar(c => c.TecnicoId > 0);
         }
         catch (Exception ex)
         {
@@ -114,20 +114,20 @@
             {
                 if (filtro == "id" && int.TryParse(valorFiltro, out int TecnicoId))
                 {
-                    ListaTecnicos = await tecnicoServies.Listar(t => t.TecnicoId == TecnicoId);
+                    ListaTecnicos = await tecnicoService.Listar(t => t.TecnicoId == TecnicoId);
                 }
                 else if (filtro == "nombre")
                 {
-                    ListaTecnicos = await tecnicoServies.Listar(t => t.Nombre.Contains(valorFiltro, StringComparison.OrdinalIgnoreCase));
+                    ListaTecnicos = await tecnicoService.Listar(t => t.Nombre == valorFiltro);
                 }
                 else if (filtro == "diascompromiso" && int.TryParse(valorFiltro, out int TipoId))
                 {
-                    ListaTecnicos = await tecnicoServies.Listar(t => t.TipoId == TipoId);
+                    ListaTecnicos = await tecnicoService.Listar(t => t.TipoId == TipoId);
                 }
             }
             else
             {
-                ListaTecnicos = await tecnicoServies.Listar(p => true);
+                ListaTecnicos = await tecnicoService.Listar(p => true);
             }
         }
         catch (Exception ex)

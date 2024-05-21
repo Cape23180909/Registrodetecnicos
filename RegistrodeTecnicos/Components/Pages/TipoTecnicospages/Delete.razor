@@ -1,6 +1,6 @@
 ﻿@page "/TipoTecnico/Delete/{TipoId:int}"
 @using RegistrodeTecnicos.Migrations
-@inject TipoTecnicoServies tipoTecnicoServices
+@inject TiposTecnicoService tipoTecnicoServices
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
@@ -52,7 +52,7 @@
 @code {
     [Parameter]
     public int TipoId { get; set; }
-    public TipoTecnicos? tipotecnicos { get; set; } = new TipoTecnicos();
+    public TiposTecnicos? tipotecnicos { get; set; } = new TiposTecnicos();
 
     protected override async Task OnInitializedAsync()
     {

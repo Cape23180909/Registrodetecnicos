@@ -1,5 +1,5 @@
 ﻿@page "/Tecnico/Details/{TecnicoId:int}"
-@inject TecnicoServies tecnicoServies
+@inject TecnicoService tecnicoService
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
@@ -47,7 +47,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        tecnico = await tecnicoServies.Buscar(TecnicoId);
+        tecnico = await tecnicoService.Buscar(TecnicoId);
     }
 
     public async Task Volver()
