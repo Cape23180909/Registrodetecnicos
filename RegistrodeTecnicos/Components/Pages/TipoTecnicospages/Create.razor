@@ -32,20 +32,34 @@
             </div>
             <!-- volver -->
             <div class="text-center">
-                <button type="submit" class="btn btn-primary mx-2">Guardar</button>
-                <NavLink href="/TipoTecnicos/index" class="btn btn-primary mx-2">Volver</NavLink>
+                <button type="submit" class="btn btn-outline-success ml-2">
+                    <span class="bi bi-check-circle-fill"></span> Guardar
+                </button>
+
+                <NavLink href="/TipoTecnicos/index" class="btn btn-outline-danger mx-2">
+                    <span class="bi bi-arrow-bar-left"></span> Volver
+                </NavLink>
+
             </div>
         </div>
+        @mensaje
     </div>
 </EditForm>
 
 @code {
     private TiposTecnicos tecnico = new TiposTecnicos();
-    private bool mostrarMensajeError = false; 
+    private bool mostrarMensajeError = false;
+    public bool Existe = false;
+    public string mensaje;
+
 
     private async Task Guardar()
     {
-      
+        if (!await Validar())
+        {
+            mensaje = "Ya existe un tecnico con esa descripcion";
+            return;
+        }
 
         var guardo = await tipotecnicoService.Guardar(tecnico);
         if (guardo)
@@ -63,11 +77,7 @@
     //Borrar este metodo ya que esta en el servies
     public async Task<bool> Validar()
     {
-        if (string.IsNullOrWhiteSpace(tecnico.Descripcion))
-            return true; // Retorna verdadero si la descripción está vacía
-
-        var listaTecnicos = await tipotecnicoService.Listar(t => t.Descripcion.ToLower() == tecnico.Descripcion.ToLower() && t.TipoId != tecnico.TipoId);
-        var Existe = listaTecnicos.Any();
-        return Existe;
-    }
+        Existe = await tipotecnicoService.Existe(tecnico.TipoId, tecnico.Descripcion);
+        return !Existe;
+    }
 }
