@@ -15,7 +15,7 @@
                 <label for="Filtro" class="form-label">Filtrar por:</label>
                 <select @bind="filtro" class="form-select">
                     <option value="id">ID</option>
-                    <option value="nombre">Descripci&oacute;n</option>
+                    <option value="nombre">Descripción</option>
                 </select>
             </div>
             <div class="col-md-6">
@@ -67,9 +67,9 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="/TipoTecnico/Delete/@t.TipoId" class="btn btn-danger ml-1">
+                                <button type="button" class="btn btn-danger ml-1" @onclick="() => IrEliminar(t.TipoId)">
                                     <i class="bi bi-trash"></i>
-                                </a>
+                                </button>
                             </td>
                         </tr>
                     }
@@ -83,8 +83,7 @@
 </div>
 
 @code {
-    public List<TiposTecnicos> ListaTipoTecnicos = new List<TiposTecnicos>();
-
+    public List<TiposTecnicos> ListaTipoTecnicos { get; set; } = new List<TiposTecnicos>();
     private string filtro = "id";
     private string valorFiltro = "";
 
@@ -105,6 +104,8 @@
     {
         try
         {
+            Console.WriteLine($"Filtrando por: {filtro} con valor: {valorFiltro}");
+
             if (!string.IsNullOrWhiteSpace(valorFiltro))
             {
                 if (filtro == "id" && int.TryParse(valorFiltro, out int filtroId))
@@ -113,18 +114,26 @@
                 }
                 else if (filtro == "nombre")
                 {
-                    ListaTipoTecnicos = await tipoTecnicoService.Listar(t => t.Descripcion == valorFiltro);
+                    ListaTipoTecnicos = await tipoTecnicoService.Listar(t => t.Descripcion.Contains(valorFiltro, StringComparison.OrdinalIgnoreCase));
                 }
             }
             else
             {
                 ListaTipoTecnicos = await tipoTecnicoService.Listar(p => true);
             }
+
+            // Debugging output
+            Console.WriteLine($"Resultados de la búsqueda: {ListaTipoTecnicos.Count}");
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error en Buscar(): {ex.Message}");
             ListaTipoTecnicos = new List<TiposTecnicos>();
         }
+    }
+
+    private void IrEliminar(int tipoId)
+    {
+        navigationManager.NavigateTo($"/TipoTecnico/Delete/TipoId={tipoId}");
     }
 }
