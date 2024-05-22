@@ -16,7 +16,6 @@ public class TiposTecnicoService
     {
         _contexto = contexto;
     }
-
     // Método Existente
     public async Task<bool> Existe(int tipoTecnicoId)
     {
@@ -76,5 +75,4 @@ public class TiposTecnicoService
             .Where(criterio)
             .ToListAsync();
     }
-
 }
