@@ -69,7 +69,7 @@
             if (tecnico != null)
             {
                 var tipo = await tiposTecnicoService.Buscar(tecnico.TipoId);
-                tipoDescripcion = tipo?.Descripcion ?? "Tipo no encontrado";
+                tipoDescripcion = tipo?.Descripcion?? "Tipo no encontrado";
             }
         }
     }

@@ -14,12 +14,15 @@ public class Program
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
+        // Setup connection string
         var ConStr = builder.Configuration.GetConnectionString("ConStr");
-        builder.Services.AddDbContext<Contexto>(Options => Options.UseSqlite(ConStr));
+        builder.Services.AddDbContext<Contexto>(options => options.UseSqlite(ConStr));
+
+        // Register services
         builder.Services.AddScoped<TecnicoService>();
         builder.Services.AddScoped<TiposTecnicoService>();
+        builder.Services.AddScoped<IncentivosTecnicoService>();
         builder.Services.AddBlazorBootstrap();
-
 
         var app = builder.Build();
 
@@ -27,12 +30,10 @@ public class Program
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
 
         app.UseHttpsRedirection();
-
         app.UseStaticFiles();
         app.UseAntiforgery();
 
