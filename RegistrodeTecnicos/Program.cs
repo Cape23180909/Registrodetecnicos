@@ -20,6 +20,7 @@ public class Program
         builder.Services.AddScoped<TiposTecnicoService>();
         builder.Services.AddBlazorBootstrap();
 
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
