@@ -67,9 +67,10 @@
                                 </a>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger ml-1" @onclick="() => IrEliminar(t.TipoId)">
+                                <a href="/TipoTecnico/Delete/@t.TipoId" class="btn btn-danger ml-1" onclick="IrEliminar(t.TipoId)">
                                     <i class="bi bi-trash"></i>
-                                </button>
+                                </a>
+
                             </td>
                         </tr>
                     }
