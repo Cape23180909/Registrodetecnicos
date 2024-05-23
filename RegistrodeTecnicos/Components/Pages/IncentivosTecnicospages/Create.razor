@@ -59,12 +59,13 @@
                 <ValidationMessage For="@(() => tecnico.Monto)" />
             </div>
 
-            <!-- volver -->
+            <!-- Guardar -->
             <div class="text-center">
                 <button type="submit" class="btn btn-outline-success ml-2">
                     <span class="bi bi-check-circle-fill"></span> Guardar
                 </button>
 
+                <!-- Retroceder -->
                 <NavLink href="/Incentivostecnicos/index" class="btn btn-outline-danger mx-2">
                     <span class="bi bi-arrow-bar-left"></span> Retroceder
                 </NavLink>
@@ -82,7 +83,7 @@
 
     public async Task<bool> Validar()
     {
-       // Existe = await incentivostecnicoService.Existe(tecnico.TipoId, tecnico.Descripcion);
+        Existe = await incentivostecnicoService.Existe(tecnico.Descripcion);
         return !Existe;
     }
 
