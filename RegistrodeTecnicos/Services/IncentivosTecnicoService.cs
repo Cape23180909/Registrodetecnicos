@@ -1,74 +1,67 @@
 ﻿using RegistrodeTecnicos.Models;
 using RegistrodeTecnicos.Pages.DAL;
-using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+
 namespace RegistrodeTecnicos.Services
 {
     public class IncentivosTecnicoService
     {
-        private readonly Contexto _contexto;
-        public IncentivosTecnicoService (Contexto contexto)
+        private readonly Contexto Contexto;
+
+        public IncentivosTecnicoService(Contexto contexto)
         {
-            _contexto = contexto;
+            Contexto = contexto;
         }
-        // Método Existente
-        public async Task<bool> Existe(int tipoTecnicoId)
+
+        public async Task<bool> Existe(int incentivoId)
         {
-            return await _contexto
-                .TipoTecnicos.AnyAsync(t => t.TipoId == tipoTecnicoId);
+            return await Contexto.IncentivosTecnicos.AnyAsync(t => t.IncentivoId == incentivoId);
         }
-        public async Task<bool> Existe(int tipoId, string? descripcion)
+
+        public async Task<bool> Existe(string descripcion)
         {
-            return await _contexto.TipoTecnicos
-                .AnyAsync(t => t.TipoId != tipoId && t.Descripcion.Equals(descripcion));
+            return await Contexto.IncentivosTecnicos.AnyAsync(t => t.Descripcion.Equals(descripcion));
         }
-        // Método Insertar
-        private async Task<bool> Insertar(TiposTecnicos tipoTecnicos)
+
+        private async Task<bool> Insertar(IncentivosTecnicos incentivo)
         {
-            _contexto.TipoTecnicos.Add(tipoTecnicos);
-            return await _contexto
-                .SaveChangesAsync() > 0;
+            Contexto.IncentivosTecnicos.Add(incentivo);
+            return await Contexto.SaveChangesAsync() > 0;
         }
-        // Método Modificar
-        private async Task<bool> Modificar(TiposTecnicos tipoTecnicos)
+
+        private async Task<bool> Modificar(IncentivosTecnicos incentivo)
         {
-            _contexto.TipoTecnicos.Update(tipoTecnicos);
-            return await _contexto
-                .SaveChangesAsync() > 0;
+            Contexto.IncentivosTecnicos.Update(incentivo);
+            return await Contexto.SaveChangesAsync() > 0;
         }
-        // Método guardar
-        public async Task<bool> Guardar(TiposTecnicos tipoTecnicos)
+
+        public async Task<bool> Guardar(IncentivosTecnicos incentivo)
         {
-            if (!await Existe(tipoTecnicos.TipoId))
-                return await Insertar(tipoTecnicos);
+            if (!await Existe(incentivo.IncentivoId))
+                return await Insertar(incentivo);
             else
-                return await Modificar(tipoTecnicos);
+                return await Modificar(incentivo);
         }
-        // Método eliminar
+
         public async Task<bool> Eliminar(int id)
         {
-            var tipoTecnico = await _contexto
-                .TipoTecnicos.FindAsync(id);
-            if (tipoTecnico == null)
+            var incentivo = await Contexto.IncentivosTecnicos.FindAsync(id);
+            if (incentivo == null)
                 return false;
 
-            _contexto.TipoTecnicos.Remove(tipoTecnico);
-            return await _contexto.SaveChangesAsync() > 0;
+            Contexto.IncentivosTecnicos.Remove(incentivo);
+            return await Contexto.SaveChangesAsync() > 0;
         }
-        // Método buscar
-        public async Task<TiposTecnicos?> Buscar(int id)
+
+        public async Task<IncentivosTecnicos?> Buscar(int id)
         {
-            return await _contexto.TipoTecnicos
-                .AsNoTracking()
-                .FirstOrDefaultAsync(t => t.TipoId == id);
+            return await Contexto.IncentivosTecnicos.AsNoTracking().FirstOrDefaultAsync(t => t.IncentivoId == id);
         }
-        // Método listar
-        public async Task<List<TiposTecnicos>> Listar(Expression<Func<TiposTecnicos, bool>> criterio)
+
+        public async Task<List<IncentivosTecnicos>> Listar(Expression<Func<IncentivosTecnicos, bool>> criterio)
         {
-            return await _contexto.TipoTecnicos
-                .AsNoTracking()
-                .Where(criterio)
-                .ToListAsync();
+            return await Contexto.IncentivosTecnicos.AsNoTracking().Where(criterio).ToListAsync();
         }
     }
 }
