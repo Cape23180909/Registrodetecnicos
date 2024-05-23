@@ -17,6 +17,34 @@ namespace RegistrodeTecnicos.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
 
+            modelBuilder.Entity("RegistrodeTecnicos.Models.IncentivosTecnicos", b =>
+                {
+                    b.Property<int>("IncentivoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CantidadServicios")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Fecha")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Monto")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TecnicoId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("IncentivoId");
+
+                    b.ToTable("IncentivosTecnicos");
+                });
+
             modelBuilder.Entity("RegistrodeTecnicos.Models.Tecnicos", b =>
                 {
                     b.Property<int>("TecnicoId")
