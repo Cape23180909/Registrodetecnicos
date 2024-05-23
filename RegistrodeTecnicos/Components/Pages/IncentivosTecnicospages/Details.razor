@@ -1,0 +1,56 @@
+﻿@page "/IncentivoTecnico/Details/{IncentivoId:int}"
+@inject IncentivosTecnicoService incentivostecnicoService
+@inject NavigationManager navigationManager
+@rendermode InteractiveServer
+
+<PageTitle>Detalles del Incentivo Técnico</PageTitle>
+
+@if (incentivoTecnico != null)
+{
+    <div class="container">
+        <div class="card shadow-header">
+            <div class="card-header bg-primary text-white text-center py-2 rounded">
+                <h3 class="text-center"><strong>Detalles del Incentivo Técnico</strong></h3>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li><strong>IncentivoId:</strong> @incentivoTecnico.IncentivoId</li>
+                                <li><strong>Fecha:</strong> @incentivoTecnico.Fecha</li>
+                                <li><strong>TecnicoId:</strong> @incentivoTecnico.TecnicoId</li>
+                                <li><strong>Descripción:</strong> @incentivoTecnico.Descripcion</li>
+                                <li><strong>Cantidad de Servicios:</strong> @incentivoTecnico.CantidadServicios</li>
+                                <li><strong>Monto:</strong> @incentivoTecnico.Monto</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-outline-primary" @onclick="Volver"><i class="bi bi-box-arrow-left"></i> Volver</button>
+        </div>
+    </div>
+}
+else
+{
+    <p>Incentivo Técnico no encontrado.</p>
+}
+
+@code {
+    [Parameter]
+    public int IncentivoId { get; set; }
+    private IncentivosTecnicos incentivoTecnico;
+
+    protected override async Task OnInitializedAsync()
+    {
+        incentivoTecnico = await incentivostecnicoService.Buscar(IncentivoId);
+    }
+
+    private void Volver()
+    {
+        navigationManager.NavigateTo("/Incentivostecnicos/index");
+    }
+}
