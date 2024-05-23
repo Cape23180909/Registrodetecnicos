@@ -1,0 +1,110 @@
+﻿@page "/IncentivoTecnico/Create"
+@inject IncentivosTecnicoService incentivostecnicoService
+@inject NavigationManager navigationManager
+@rendermode InteractiveServer
+
+<PageTitle>Registro Incentivos de Tecnicos</PageTitle>
+
+<EditForm Model="tecnico" OnValidSubmit="Guardar" formname="crearIncentivoTecnicoForm">
+    <DataAnnotationsValidator />
+
+    <div class="card">
+        <div class="card-header bg-primary text-white text-center py-2 rounded">
+            <h3><i class="fas fa-clipboard-list"></i> Registro de Incentivos de Técnicos</h3>
+        </div>
+        <div class="card-body">
+            <!-- IncentivoId -->
+            <div class="form-group">
+                <label for="IncentivoId">IncentivoId</label>
+                <InputNumber id="IncentivoId" class="form-control" @bind-Value="tecnico.IncentivoId" />
+                <ValidationMessage For="@(() => tecnico.IncentivoId)" />
+            </div>
+
+            <!-- Fecha -->
+            <div class="form-group">
+                <label for="Fecha">Fecha</label>
+                <InputText id="Fecha" class="form-control" @bind-Value="tecnico.Fecha" />
+                <ValidationMessage For="@(() => tecnico.Fecha)" />
+            </div>
+
+            <!-- TecnicoId -->
+            <div class="form-group">
+                <label for="TecnicoId">TecnicoId</label>
+                <InputNumber id="TecnicoId" class="form-control" @bind-Value="tecnico.TecnicoId" />
+                <ValidationMessage For="@(() => tecnico.TecnicoId)" />
+            </div>
+
+            <!-- Descripcion -->
+            <div class="form-group">
+                <label for="Descripcion">Descripción</label>
+                <InputText id="Descripcion" class="form-control" @bind-Value="tecnico.Descripcion" @oninput="() => mostrarMensajeError = false" />
+                @if (mostrarMensajeError)
+                {
+                    <div class="text-danger">El campo no está lleno.</div>
+                }
+                <ValidationMessage For="@(() => tecnico.Descripcion)" />
+            </div>
+
+            <!-- CantidadServicios -->
+            <div class="form-group">
+                <label for="CantidadServicios">Cantidad de Servicios</label>
+                <InputNumber id="CantidadServicios" class="form-control" @bind-Value="tecnico.CantidadServicios" />
+                <ValidationMessage For="@(() => tecnico.CantidadServicios)" />
+            </div>
+
+            <!-- Monto -->
+            <div class="form-group">
+                <label for="Monto">Monto</label>
+                <InputNumber id="Monto" class="form-control" @bind-Value="tecnico.Monto" />
+                <ValidationMessage For="@(() => tecnico.Monto)" />
+            </div>
+
+            <!-- volver -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-success ml-2">
+                    <span class="bi bi-check-circle-fill"></span> Guardar
+                </button>
+
+                <NavLink href="/Incentivostecnicos/index" class="btn btn-outline-danger mx-2">
+                    <span class="bi bi-arrow-bar-left"></span> Retroceder
+                </NavLink>
+            </div>
+        </div>
+        @mensaje
+    </div>
+</EditForm>
+
+@code {
+    private IncentivosTecnicos tecnico = new IncentivosTecnicos();
+    private bool mostrarMensajeError = false;
+    public bool Existe = false;
+    public string mensaje;
+
+    public async Task<bool> Validar()
+    {
+       // Existe = await incentivostecnicoService.Existe(tecnico.TipoId, tecnico.Descripcion);
+        return !Existe;
+    }
+
+    private async Task Guardar()
+    {
+        if (!await Validar())
+        {
+            mensaje = "Ya existe un incentivo con esa descripcion";
+            mostrarMensajeError = true;  
+            return;
+        }
+
+        var guardo = await incentivostecnicoService.Guardar(tecnico);
+        if (guardo)
+        {
+            Nuevo();
+            navigationManager.NavigateTo("/Incentivostecnicos/index");
+        }
+    }
+
+    public void Nuevo()
+    {
+        tecnico = new IncentivosTecnicos();
+    }
+}
