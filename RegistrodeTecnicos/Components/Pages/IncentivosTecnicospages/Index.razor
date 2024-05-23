@@ -35,7 +35,7 @@
             <div class="col-md-9"></div>
             <div class="col-md-3 text-end">
                 <a href="/IncentivoTecnico/Create" class="btn btn-success" type="button">
-                    <i class="bi bi-pencil-square"></i>  Crear
+                    <i class="bi bi-pencil-square"></i> Crear
                 </a>
             </div>
         </div>
@@ -45,12 +45,12 @@
         <table class="table table-bordered text-center">
             <thead class="bg-primary text-white">
                 <tr>
-                    <th>IcentivoId</th>
+                    <th>IncentivoId</th>
                     <th>Fecha</th>
                     <th>TecnicoId</th>
-                    <th>Descripcion</th>
+                    <th>Descripción</th>
                     <th>CantidadServicios</th>
-                    <th>Monto </th>
+                    <th>Monto</th>
                     <th>Detalle</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
@@ -72,14 +72,14 @@
                             </a>
                         </td>
                         <td>
-                            <a href="/Tecnico/Edit/@t.IncentivoId" style="border: none; background-color: transparent;" class="btn-editar">
+                            <a href="/IncentivoTecnico/Edit/@t.IncentivoId" style="border: none; background-color: transparent;" class="btn-editar">
                                 <span class="bi bi-pencil-square" style="font-size: 2rem;"></span>
                             </a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger ml-1" @onclick="() => IrEliminar(t.IncentivoId)">
+                            <a href="/IncentivoTecnico/Delete/@t.IncentivoId" class="btn btn-danger ml-1">
                                 <i class="bi bi-trash"></i>
-                            </button>
+                            </a>
                         </td>
                     </tr>
                 }
@@ -100,7 +100,7 @@
     {
         try
         {
-            ListaTecnicos = await incentivostecnicoService.Listar(c => c.IncentivoId > 0); 
+            ListaTecnicos = await incentivostecnicoService.Listar(c => c.IncentivoId > 0);
         }
         catch (Exception ex)
         {
@@ -121,11 +121,11 @@
                 }
                 else if (filtro == "nombre")
                 {
-                  ListaTecnicos = await incentivostecnicoService.Listar(t => t.Descripcion == valorFiltro);
+                    ListaTecnicos = await incentivostecnicoService.Listar(t => t.Descripcion.Contains(valorFiltro));
                 }
                 else if (filtro == "tipo" && int.TryParse(valorFiltro, out int TipoId))
                 {
-                    ListaTecnicos = await incentivostecnicoService.Listar(t => t.IncentivoId == TipoId);
+                    ListaTecnicos = await incentivostecnicoService.Listar(t => t.TecnicoId == TipoId);
                 }
             }
             else
@@ -138,10 +138,5 @@
             Console.WriteLine($"Error en Buscar(): {ex.Message}");
             ListaTecnicos = new List<IncentivosTecnicos>();
         }
-    }
-
-    private async Task IrEliminar(int tecnicoId)
-    {
-        navigationManager.NavigateTo($"/Tecnico/Delete/{tecnicoId}");
     }
 }
