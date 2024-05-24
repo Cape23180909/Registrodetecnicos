@@ -1,6 +1,7 @@
 ﻿@page "/TipoTecnicos/index"
 @inject TiposTecnicoService tipoTecnicoService
 @inject NavigationManager navigationManager
+@rendermode InteractiveServer
 
 <PageTitle>Consulta Tipos Técnicos</PageTitle>
 
@@ -92,7 +93,7 @@
     {
         try
         {
-            ListaTipoTecnicos = await tipoTecnicoService.Listar(c => c.TipoId > 0);
+            ListaTipoTecnicos = await tipoTecnicoService.Listar(c => true);
         }
         catch (Exception ex)
         {
@@ -105,26 +106,21 @@
     {
         try
         {
-            Console.WriteLine($"Filtrando por: {filtro} con valor: {valorFiltro}");
-
             if (!string.IsNullOrWhiteSpace(valorFiltro))
             {
-                if (filtro == "id" && int.TryParse(valorFiltro, out int filtroId))
+                if (filtro == "id" && int.TryParse(valorFiltro, out int TecnicoId))
                 {
-                    ListaTipoTecnicos = await tipoTecnicoService.Listar(t => t.TipoId == filtroId);
+                    ListaTipoTecnicos= await tipoTecnicoService.Listar(t => t.TipoId == TecnicoId);
                 }
                 else if (filtro == "nombre")
                 {
-                    ListaTipoTecnicos = await tipoTecnicoService.Listar(t => t.Descripcion.Contains(valorFiltro, StringComparison.OrdinalIgnoreCase));
+                    ListaTipoTecnicos = await tipoTecnicoService.Listar(t => t.Descripcion == valorFiltro);
                 }
             }
             else
             {
                 ListaTipoTecnicos = await tipoTecnicoService.Listar(p => true);
             }
-
-            // Debugging output
-            Console.WriteLine($"Resultados de la búsqueda: {ListaTipoTecnicos.Count}");
         }
         catch (Exception ex)
         {
@@ -132,7 +128,6 @@
             ListaTipoTecnicos = new List<TiposTecnicos>();
         }
     }
-
     private void IrEliminar(int tipoId)
     {
         navigationManager.NavigateTo($"/TipoTecnico/Delete/TipoId={tipoId}");
