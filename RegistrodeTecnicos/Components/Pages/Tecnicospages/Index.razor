@@ -16,7 +16,7 @@
             <select @bind="filtro" class="form-select">
                 <option value="id">ID</option>
                 <option value="nombre">Nombre</option>
-                <option value="tipo tecnico">Tipo técnico</option>
+                <option value="tipo tecnico">Tipo Técnico</option>
             </select>
         </div>
         <div class="col-md-6">
@@ -118,11 +118,11 @@
                 }
                 else if (filtro == "nombre")
                 {
-                    ListaTecnicos = await tecnicoService.Listar(t => t.Nombre == valorFiltro);
+                    ListaTecnicos = await tecnicoService.Listar(t => t.Nombre.Contains(valorFiltro));
                 }
-                else if (filtro == "tipo tecnico" && int.TryParse(valorFiltro, out int TipoId))
+                else if (filtro == "tipo tecnico")
                 {
-                    ListaTecnicos = await tecnicoService.Listar(t => t.TipoId == TipoId);
+                    ListaTecnicos = await tecnicoService.Listar(t => t.TiposTecnicos!.Descripcion.Contains(valorFiltro));
                 }
             }
             else
@@ -136,7 +136,8 @@
             ListaTecnicos = new List<Tecnicos>();
         }
     }
-      private async Task IrEliminar(int tecnicoId)
+
+    private async Task IrEliminar(int tecnicoId)
     {
         navigationManager.NavigateTo($"/Tecnico/Delete/TecnicoId={tecnicoId}");
     }
