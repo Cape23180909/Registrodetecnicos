@@ -9,4 +9,5 @@ public class TiposTecnicos
 
     public string Descripcion { get; set; }
 
+
 }
