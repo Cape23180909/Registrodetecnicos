@@ -22,6 +22,8 @@ public class Program
         builder.Services.AddScoped<TecnicoService>();
         builder.Services.AddScoped<TiposTecnicoService>();
         builder.Services.AddScoped<IncentivosTecnicoService>();
+
+
         builder.Services.AddBlazorBootstrap();
 
         var app = builder.Build();
