@@ -11,6 +11,10 @@ public class Tecnicos
     [Required(ErrorMessage = "El campo no esta lleno")]
     public float? Sueldohora { get; set; }
     [ForeignKey("TiposTecnicos")]
+
     public int TipoId { get; set; }
     public int IncentivoId { get; set; }
+
+    public TiposTecnicos? TiposTecnicos { get; set; }
+
 }
