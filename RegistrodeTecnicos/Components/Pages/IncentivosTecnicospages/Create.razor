@@ -7,7 +7,6 @@
 
 <EditForm Model="tecnico" OnValidSubmit="Guardar" formname="crearIncentivoTecnicoForm">
     <DataAnnotationsValidator />
-    <ValidationSummary />
 
     <div class="card">
         <div class="card-header bg-primary text-white text-center py-2 rounded">
@@ -25,7 +24,7 @@
             <div class="form-group">
                 <label for="Fecha">Fecha</label>
                 <InputDate id="Fecha" class="form-control" @bind-Value="tecnico.Fecha" />
-                <ValidationMessage For="@(() => tecnico.Fecha)" />
+                <ValidationMessage For="@(() => tecnico.Fecha)"   />
             </div>
 
             <!-- TecnicoId -->
