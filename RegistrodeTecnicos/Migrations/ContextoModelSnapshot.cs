@@ -81,6 +81,9 @@ namespace RegistrodeTecnicos.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Incentivo")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("TipoId");
 
                     b.ToTable("TipoTecnicos");

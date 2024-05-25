@@ -34,7 +34,8 @@ namespace RegistrodeTecnicos.Migrations
                 {
                     TipoId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Descripcion = table.Column<string>(type: "TEXT", nullable: false)
+                    Descripcion = table.Column<string>(type: "TEXT", nullable: false),
+                    Incentivo = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

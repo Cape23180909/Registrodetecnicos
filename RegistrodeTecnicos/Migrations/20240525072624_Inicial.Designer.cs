@@ -11,7 +11,7 @@ using RegistrodeTecnicos.Pages.DAL;
 namespace RegistrodeTecnicos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240525001406_Inicial")]
+    [Migration("20240525072624_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -83,6 +83,9 @@ namespace RegistrodeTecnicos.Migrations
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Incentivo")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("TipoId");
 
