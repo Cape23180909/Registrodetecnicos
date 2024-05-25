@@ -1,7 +1,11 @@
 ﻿using RegistrodeTecnicos.Models;
 using RegistrodeTecnicos.Pages.DAL;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace RegistrodeTecnicos.Services
 {
@@ -19,10 +23,12 @@ namespace RegistrodeTecnicos.Services
             return await Contexto.IncentivosTecnicos.AnyAsync(t => t.IncentivoId == incentivoId);
         }
 
+
         public async Task<bool> Existe(string descripcion)
         {
-            return await Contexto.IncentivosTecnicos.AnyAsync(t => t.Descripcion.Equals(descripcion));
+            return await Contexto.IncentivosTecnicos.AnyAsync(t => t.Descripcion.ToLower() == descripcion.ToLower());
         }
+
 
         private async Task<bool> Insertar(IncentivosTecnicos incentivo)
         {
@@ -30,11 +36,13 @@ namespace RegistrodeTecnicos.Services
             return await Contexto.SaveChangesAsync() > 0;
         }
 
+
         private async Task<bool> Modificar(IncentivosTecnicos incentivo)
         {
             Contexto.IncentivosTecnicos.Update(incentivo);
             return await Contexto.SaveChangesAsync() > 0;
         }
+
 
         public async Task<bool> Guardar(IncentivosTecnicos incentivo)
         {
@@ -53,6 +61,7 @@ namespace RegistrodeTecnicos.Services
             Contexto.IncentivosTecnicos.Remove(incentivo);
             return await Contexto.SaveChangesAsync() > 0;
         }
+
 
         public async Task<IncentivosTecnicos?> Buscar(int id)
         {
