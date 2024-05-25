@@ -19,34 +19,36 @@
                             <ul class="list-unstyled">
                                 <li><strong>TipoId:</strong> @tipotecnico.TipoId</li>
                                 <li><strong>Descripción:</strong> @tipotecnico.Descripcion</li>
+                                <li><strong>Incentivo:</strong> @tipotecnico.Incentivo</li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-outline-primary" @onclick="Volver"><i class="bi bi-box-arrow-left"></i> Volver</button>
+                </div>
+                </div>
             </div>
         </div>
-        <div class="card-footer">
-            <button type="button" class="btn btn-outline-primary" @onclick="Volver"><i class="bi bi-box-arrow-left"></i> Volver</button>
-        </div>
-    </div>
+
 }
 else
 {
-    <p>TipoTecnico no encontrado.</p>
+    <p>Cargando...</p>
 }
 
 @code {
     [Parameter]
-    public int TipoId { get; set; }
+    public int tipoId { get; set; }
     private TiposTecnicos tipotecnico;
 
     protected override async Task OnInitializedAsync()
     {
-        tipotecnico = await tipoTecnicoServices.Buscar(TipoId);
+        tipotecnico = await tipoTecnicoServices.Buscar(tipoId);
     }
 
     private async Task Volver()
     {
-        navigationManager.NavigateTo("/Incentivostecnicos/index");
+        navigationManager.NavigateTo("/TipoTecnicos/index");
     }
 }

@@ -46,6 +46,7 @@
                     <tr>
                         <th>TipoId</th>
                         <th>Descripción</th>
+                        <th>Incentivo</th>
                         <th>Detalle</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
@@ -57,6 +58,7 @@
                         <tr>
                             <td>@t.TipoId</td>
                             <td>@t.Descripcion</td>
+                            <td>@t.Incentivo</td>
                             <td>
                                 <a href="/TipoTecnico/Details/@t.TipoId" style="border: none; background-color: transparent;" class="btn-detalle">
                                     <span class="bi bi-info-circle-fill" style="font-size: 2rem;"></span>
@@ -110,7 +112,7 @@
             {
                 if (filtro == "id" && int.TryParse(valorFiltro, out int TecnicoId))
                 {
-                    ListaTipoTecnicos= await tipoTecnicoService.Listar(t => t.TipoId == TecnicoId);
+                    ListaTipoTecnicos = await tipoTecnicoService.Listar(t => t.TipoId == TecnicoId);
                 }
                 else if (filtro == "nombre")
                 {

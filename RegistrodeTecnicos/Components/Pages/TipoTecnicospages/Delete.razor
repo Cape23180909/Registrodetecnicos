@@ -1,6 +1,6 @@
 ﻿@page "/TipoTecnico/Delete/{TipoId:int}"
 @inject TiposTecnicoService tipoTecnicoServices
-@inject NavigationManager navigationManager
+@inject NavigationManager NavigationManager
 @rendermode InteractiveServer
 
 <PageTitle>Eliminar Técnico</PageTitle>
@@ -13,18 +13,17 @@
         <div class="card-header">
             <h3 class="text-danger">¿Estás seguro de que quieres eliminar este técnico?</h3>
         </div>
-
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card-body">
-                        <div class="border-primary border-2 borde">
-                            <div class="card-body">
-                                <div class="row">
+                    <div class="cuerpo-tarjeta">
+                        <div class="borde-borde-primario-2 borde">
+                            <div class="cuerpo-tarjeta">
+                                <div class="fila">
                                     <div class="col-md-8">
                                         <ul class="list-unstyled">
-                                            <li><strong>TécnicoId:</strong> @tipotecnicos.TipoId</li>
-                                            <li><strong>Nombre:</strong> @tipotecnicos.Descripcion</li>
+                                            <li><strong>TécnicoId:</strong> @tipotécnicos.TipoId</li>
+                                            <li><strong>Nombre:</strong> @tipotécnicos.Descripcion</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -43,7 +42,7 @@
     </div>
 </div>
 
-@if (tipotecnicos == null)
+@if (tipotécnicos == null)
 {
     <p>Técnico no encontrado.</p>
 }
@@ -51,19 +50,19 @@
 @code {
     [Parameter]
     public int TipoId { get; set; }
-    public TiposTecnicos? tipotecnicos { get; set; } = new TiposTecnicos();
+    public TiposTecnicos? tipotécnicos { get; set; } = new TiposTecnicos();
 
     protected override async Task OnInitializedAsync()
     {
         if (TipoId != 0)
         {
-            tipotecnicos = await tipoTecnicoServices.Buscar(TipoId);
+            tipotécnicos = await tipoTecnicoServices.Buscar(TipoId);
         }
     }
 
     public async Task EliminarTipoTecnico()
     {
-        if (TipoId == 0 || tipotecnicos == null)
+        if (TipoId == 0 || tipotécnicos == null)
         {
             return;
         }
@@ -76,6 +75,6 @@
 
     public async Task Volver()
     {
-        navigationManager.NavigateTo("/TipoTecnicos/index");
+        NavigationManager.NavigateTo("/TipoTecnicos/index");
     }
 }

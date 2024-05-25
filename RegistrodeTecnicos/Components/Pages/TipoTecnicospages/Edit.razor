@@ -35,6 +35,12 @@
                 }
             </div>
 
+            <!-- Incentivo -->
+            <div class="mb-3">
+                <label for="Incentivo" class="form-label">Incentivo:</label>
+                <InputNumber @bind-Value="tipotecnicos.Incentivo" class="form-control" />
+                <ValidationMessage For="@(() => tipotecnicos.Incentivo)" />
+            </div>
         </div>
 
         <div class="card-footer bg-light d-flex justify-content-center mt-3">
