@@ -49,7 +49,7 @@ else
         incentivoTecnico = await incentivostecnicoService.Buscar(IncentivoId);
     }
 
-    private void Volver()
+    private async Task Volver()
     {
         navigationManager.NavigateTo("/Incentivostecnicos/index");
     }
