@@ -16,8 +16,9 @@
             <label for="Filtro" class="form-label">Filtrar por:</label>
             <select @bind="filtro" class="form-select">
                 <option value="id">ID</option>
-                <option value="nombre">Nombre</option>
-                <option value="tipo">Tipo Técnico</option>
+                <option value="fecha">Fecha</option>
+                <option value="descripcion">Descripción</option>
+                <option value="monto">Monto</option>
             </select>
         </div>
         <div class="col-md-6">
@@ -62,11 +63,11 @@
                 {
                     <tr>
                         <td>@t.IncentivoId</td>
-                        <td>@t.Fecha</td>
+                        <td>@t.Fecha.ToString("yyyy-MM-dd")</td> <!-- Formato de fecha -->
                         <td>@t.TecnicoId</td>
                         <td>@t.Descripcion</td>
                         <td>@t.CantidadServicios</td>
-                        <td>@t.Monto</td>
+                        <td>@t.Monto.ToString("C")</td> <!-- Formato de moneda -->
                         <td>
                             <a href="/IncentivoTecnico/Details/@t.IncentivoId" style="border: none; background-color: transparent;" class="btn-detalle">
                                 <span class="bi bi-info-circle-fill" style="font-size: 2rem;"></span>
@@ -120,13 +121,17 @@
                 {
                     ListaTecnicos = await incentivostecnicoService.Listar(t => t.IncentivoId == IncentivoId);
                 }
-                else if (filtro == "nombre")
+                else if (filtro == "fecha" && DateTime.TryParse(valorFiltro, out DateTime fecha))
+                {
+                    ListaTecnicos = await incentivostecnicoService.Listar(t => t.Fecha.Date == fecha.Date);
+                }
+                else if (filtro == "descripcion")
                 {
                     ListaTecnicos = await incentivostecnicoService.Listar(t => t.Descripcion.Contains(valorFiltro));
                 }
-                else if (filtro == "tipo" && int.TryParse(valorFiltro, out int TipoId))
+                else if (filtro == "monto" && decimal.TryParse(valorFiltro, out decimal monto))
                 {
-                    ListaTecnicos = await incentivostecnicoService.Listar(t => t.TecnicoId == TipoId);
+                    ListaTecnicos = await incentivostecnicoService.Listar(t => t.Monto == monto);
                 }
             }
             else
