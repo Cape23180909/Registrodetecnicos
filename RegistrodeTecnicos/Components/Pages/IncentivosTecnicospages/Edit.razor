@@ -23,13 +23,13 @@
             <!-- Fecha -->
             <div class="form-group">
                 <label for="Fecha">Fecha</label>
-                <InputText id="Fecha" class="form-control" @bind-Value="tecnico.Fecha" />
+                <InputDate id="Fecha" class="form-control" @bind-Value="tecnico.Fecha" />
                 <ValidationMessage For="@(() => tecnico.Fecha)" />
             </div>
 
             <!-- TecnicoId -->
             <div class="form-group">
-                <label for="TécnicoId">TécnicoId</label>
+                <label for="TecnicoId">TécnicoId</label>
                 <InputNumber id="TecnicoId" class="form-control" @bind-Value="tecnico.TecnicoId" />
                 <ValidationMessage For="@(() => tecnico.TecnicoId)" />
             </div>
@@ -37,7 +37,7 @@
             <!-- Descripcion -->
             <div class="form-group">
                 <label for="Descripcion">Descripción</label>
-                <InputText id="Descripcion" class="form-control" @bind-Value="tecnico.Descripcion" @oninput="() => mostrarMensajeError = false" />
+                <InputText id="Descripcion" class="form-control" @bind-Value="tecnico.Descripcion" @oninput="(ChangeEventArgs e) => { tecnico.Descripcion = e.Value.ToString(); mostrarMensajeError = false; }" />
                 @if (mostrarMensajeError)
                 {
                     <div class="text-danger">El campo no está lleno.</div>
