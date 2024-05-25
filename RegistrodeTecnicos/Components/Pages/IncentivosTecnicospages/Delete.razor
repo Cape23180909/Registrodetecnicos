@@ -1,5 +1,5 @@
 ﻿@page "/IncentivoTecnico/Delete/{TipoId:int}"
-@using RegistrodeTecnicos.Models  <!-- Asegúrate de usar el espacio de nombres correcto -->
+@using RegistrodeTecnicos.Models  
 @inject IncentivosTecnicoService incentivostecnicoService
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
@@ -25,7 +25,7 @@
                                     <div class="col-md-8">
                                         <ul class="list-unstyled">
                                             <li><strong>IncentivoId:</strong> @tecnico?.IncentivoId</li>
-                                            <li><strong>Fecha:</strong> @tecnico?.Fecha</li>
+                                            <li><strong>Fecha:</strong> @tecnico.Fecha.ToShortDateString()</li>
                                             <li><strong>TécnicoId:</strong> @tecnico?.TecnicoId</li>
                                             <li><strong>Descripción:</strong> @tecnico?.Descripcion</li>
                                             <li><strong>CantidadServicios:</strong> @tecnico?.CantidadServicios</li>
