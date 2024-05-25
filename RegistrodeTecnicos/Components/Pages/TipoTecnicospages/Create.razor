@@ -7,6 +7,7 @@
 
 <EditForm Model="tecnico" OnValidSubmit="Guardar" formname="crearTipoTecnicoForm">
     <DataAnnotationsValidator />
+    <ValidationSummary />
 
     <div class="card">
         <div class="card-header bg-primary text-white text-center py-2 rounded">
@@ -23,10 +24,10 @@
             <!-- Descripcion -->
             <div class="form-group">
                 <label for="Descripcion">Descripción</label>
-                <InputText id="Descripcion" class="form-control" @bind-Value="tecnico.Descripcion" @oninput="()=> mostrarMensajeError = false" />
+                <InputText id="Descripcion" class="form-control" @bind-Value="tecnico.Descripcion" />
                 @if (mostrarMensajeError)
                 {
-                    <div class="text-danger">El campo no está lleno.</div>
+                    <div class="text-danger">El campo descripcion esta vacio</div>
                 }
                 <ValidationMessage For="@(() => tecnico.Descripcion)" />
             </div>
@@ -61,6 +62,16 @@
 
     private async Task Guardar()
     {
+        // Reiniciar el mensaje de error al enviar el formulario
+        mostrarMensajeError = false;
+        mensaje = string.Empty;
+
+        if (string.IsNullOrWhiteSpace(tecnico.Descripcion))
+        {
+            mostrarMensajeError = true;
+            return;
+        }
+
         if (!await Validar())
         {
             mensaje = "Ya existe un tecnico con esa descripcion";
