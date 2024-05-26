@@ -6,7 +6,7 @@
 <PageTitle>Registro de TiposTecnicos</PageTitle>
 
 <EditForm Model="tecnico" OnValidSubmit="Guardar" formname="crearTipoTecnicoForm">
-    <DataAnnotationsValidator /> 
+    <DataAnnotationsValidator />
 
     <div class="card">
         <div class="card-header bg-primary text-white text-center py-2 rounded">
@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label for="Descripcion">Descripción</label>
                 <InputText id="Descripcion" class="form-control" @bind-Value="tecnico.Descripcion" />
-                <ValidationMessage For="@(() => tecnico.Descripcion)" /> 
+                <ValidationMessage For="@(() => tecnico.Descripcion)" />
             </div>
 
             <!-- Incentivo -->
