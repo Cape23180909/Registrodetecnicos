@@ -11,34 +11,34 @@ namespace RegistrodeTecnicos.Services;
 
 public class TiposTecnicoService
 {
-    private readonly Contexto contexto;
+    private readonly Contexto _contexto;
     public TiposTecnicoService(Contexto contexto)
     {
-        contexto = contexto;
+        _contexto = contexto;
     }
     // Método Existente
     public async Task<bool> Existe(int tipoTecnicoId)
     {
-        return await contexto
+        return await _contexto
             .TipoTecnicos.AnyAsync(t => t.TipoId == tipoTecnicoId);
     }
     public async Task<bool> Existe(int tipoId, string? descripcion)
     {
-        return await contexto.TipoTecnicos
+        return await _contexto.TipoTecnicos
             .AnyAsync(t => t.TipoId != tipoId && t.Descripcion.Equals(descripcion));
     }
     // Método Insertar
     private async Task<bool> Insertar(TiposTecnicos tipoTecnicos)
     {
-        contexto.TipoTecnicos.Add(tipoTecnicos);
-        return await contexto
+        _contexto.TipoTecnicos.Add(tipoTecnicos);
+        return await _contexto
             .SaveChangesAsync() > 0;
     }
     // Método Modificar
     private async Task<bool> Modificar(TiposTecnicos tipoTecnicos)
     {
-        contexto.TipoTecnicos.Update(tipoTecnicos);
-        return await contexto
+        _contexto.TipoTecnicos.Update(tipoTecnicos);
+        return await _contexto
             .SaveChangesAsync() > 0;
     }
     // Método guardar
@@ -52,25 +52,25 @@ public class TiposTecnicoService
     // Método eliminar
     public async Task<bool> Eliminar(int id)
     {
-        var tipoTecnico = await contexto
+        var tipoTecnico = await _contexto
             .TipoTecnicos.FindAsync(id);
         if (tipoTecnico == null)
             return false;
 
-        contexto.TipoTecnicos.Remove(tipoTecnico);
-        return await contexto.SaveChangesAsync() > 0;
+        _contexto.TipoTecnicos.Remove(tipoTecnico);
+        return await _contexto.SaveChangesAsync() > 0;
     }
     // Método buscar
     public async Task<TiposTecnicos?> Buscar(int id)
     {
-        return await contexto.TipoTecnicos
+        return await _contexto.TipoTecnicos
             .AsNoTracking()
             .FirstOrDefaultAsync(t => t.TipoId == id);
     }
     // Método listar
     public async Task<List<TiposTecnicos>> Listar(Expression<Func<TiposTecnicos, bool>> criterio)
     {
-        return await contexto.TipoTecnicos
+        return await _contexto.TipoTecnicos
             .AsNoTracking()
             .Where(criterio)
             .ToListAsync();
