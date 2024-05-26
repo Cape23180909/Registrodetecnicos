@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RegistrodeTecnicos.Models
 {
@@ -14,6 +15,8 @@ namespace RegistrodeTecnicos.Models
         [Required(ErrorMessage = "El campo cantidad de servicios no esta lleno")]
         public int? CantidadServicios { get; set; }
         [Required(ErrorMessage = "El campo Monto no esta lleno")]
+
+        [ForeignKey("Tecnicos")]
         public decimal? Monto { get; set; }
     }
 }
