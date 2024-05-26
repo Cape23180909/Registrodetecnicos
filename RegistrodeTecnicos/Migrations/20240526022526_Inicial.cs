@@ -21,7 +21,7 @@ namespace RegistrodeTecnicos.Migrations
                     TecnicoId = table.Column<int>(type: "INTEGER", nullable: false),
                     Descripcion = table.Column<string>(type: "TEXT", nullable: false),
                     CantidadServicios = table.Column<int>(type: "INTEGER", nullable: false),
-                    Monto = table.Column<decimal>(type: "TEXT", nullable: false)
+                    Monto = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
