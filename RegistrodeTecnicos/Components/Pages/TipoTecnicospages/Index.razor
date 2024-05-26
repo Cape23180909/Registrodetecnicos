@@ -70,10 +70,9 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="/TipoTecnico/Delete/@t.TipoId" class="btn btn-danger ml-1" onclick="IrEliminar(t.TipoId)">
+                                <a href="/TipoTecnico/Delete/@t.TipoId" class="btn btn-danger ml-1" @onclick="() => IrEliminar(t.TipoId)">
                                     <i class="bi bi-trash"></i>
                                 </a>
-
                             </td>
                         </tr>
                     }
@@ -116,7 +115,7 @@
                 }
                 else if (filtro == "nombre")
                 {
-                    ListaTipoTecnicos = await tipoTecnicoService.Listar(t => t.Descripcion == valorFiltro);
+                    ListaTipoTecnicos = await tipoTecnicoService.Listar(t => t.Descripcion.Contains(valorFiltro));
                 }
             }
             else
@@ -130,8 +129,9 @@
             ListaTipoTecnicos = new List<TiposTecnicos>();
         }
     }
-    private async Task IrEliminar(int tipoId)
+
+    private void IrEliminar(int tipoId)
     {
-        navigationManager.NavigateTo($"/TipoTecnico/Delete/TipoId={tipoId}");
+        navigationManager.NavigateTo($"/TipoTecnico/Delete/{tipoId}");
     }
 }
