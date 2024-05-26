@@ -23,26 +23,28 @@ namespace RegistrodeTecnicos.Services
             return await Contexto.IncentivosTecnicos.AnyAsync(t => t.IncentivoId == incentivoId);
         }
 
-
         public async Task<bool> Existe(string descripcion)
         {
             return await Contexto.IncentivosTecnicos.AnyAsync(t => t.Descripcion.ToLower() == descripcion.ToLower());
         }
 
-
         private async Task<bool> Insertar(IncentivosTecnicos incentivo)
         {
+            if (incentivo == null || string.IsNullOrWhiteSpace(incentivo.Descripcion))
+                throw new ArgumentException("La descripción es obligatoria");
+
             Contexto.IncentivosTecnicos.Add(incentivo);
             return await Contexto.SaveChangesAsync() > 0;
         }
 
-
         private async Task<bool> Modificar(IncentivosTecnicos incentivo)
         {
+            if (incentivo == null || string.IsNullOrWhiteSpace(incentivo.Descripcion))
+                throw new ArgumentException("La descripción es obligatoria");
+
             Contexto.IncentivosTecnicos.Update(incentivo);
             return await Contexto.SaveChangesAsync() > 0;
         }
-
 
         public async Task<bool> Guardar(IncentivosTecnicos incentivo)
         {
@@ -62,7 +64,6 @@ namespace RegistrodeTecnicos.Services
             return await Contexto.SaveChangesAsync() > 0;
         }
 
-
         public async Task<IncentivosTecnicos?> Buscar(int id)
         {
             return await Contexto.IncentivosTecnicos.AsNoTracking().FirstOrDefaultAsync(t => t.IncentivoId == id);
@@ -72,5 +73,6 @@ namespace RegistrodeTecnicos.Services
         {
             return await Contexto.IncentivosTecnicos.AsNoTracking().Where(criterio).ToListAsync();
         }
+
     }
 }
