@@ -97,11 +97,10 @@
     {
         try
         {
-            ListaTecnicos = await tecnicoService.Listar(c => c.TecnicoId > 0);
+            ListaTecnicos = await tecnicoService.GetAllTecnicos();
         }
         catch (Exception ex)
         {
-            // Manejo del error inicial
             Console.WriteLine($"Error initializing: {ex.Message}");
         }
     }
