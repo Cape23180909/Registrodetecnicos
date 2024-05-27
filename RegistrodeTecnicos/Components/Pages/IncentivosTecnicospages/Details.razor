@@ -18,7 +18,7 @@
                         <div class="card-body">
                             <ul class="list-unstyled">
                                 <li><strong>IncentivoId:</strong> @incentivoTecnico.IncentivoId</li>
-                                <li><strong>Fecha:</strong> @incentivoTecnico?.Fecha.ToShortDateString()</li>
+                                <li><strong>Fecha:</strong> @incentivoTecnico?.Fecha.ToString("dd-MM-yyyy")</li>
                                 <li><strong>TécnicoId:</strong> @incentivoTecnico.TecnicoId</li>
                                 <li><strong>Descripción:</strong> @incentivoTecnico.Descripcion</li>
                                 <li><strong>Cantidad de Servicios:</strong> @incentivoTecnico.CantidadServicios</li>
