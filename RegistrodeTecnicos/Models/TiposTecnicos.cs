@@ -10,5 +10,5 @@ public class TiposTecnicos
     [Required(ErrorMessage = "El campo descripcion no esta lleno")]
     public string? Descripcion { get; set; }
     [Required(ErrorMessage = "El campo incentivo no esta lleno")]
-    public int? Incentivo { get; set; }
+    public decimal? Incentivo { get; set; }
 }

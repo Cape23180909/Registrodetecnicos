@@ -16,7 +16,8 @@
                 <label for="Filtro" class="form-label">Filtrar por:</label>
                 <select @bind="filtro" class="form-select">
                     <option value="id">ID</option>
-                    <option value="nombre">Descripción</option>
+                    <option value="descripcion">Descripción</option>
+                    <option value="incentivo">Incentivo</option>
                 </select>
             </div>
             <div class="col-md-6">
@@ -107,15 +108,24 @@
     {
         try
         {
+            Console.WriteLine($"Filtro: {filtro}, Valor: {valorFiltro}");
             if (!string.IsNullOrWhiteSpace(valorFiltro))
             {
                 if (filtro == "id" && int.TryParse(valorFiltro, out int TecnicoId))
                 {
                     ListaTipoTecnicos = await tipoTecnicoService.Listar(t => t.TipoId == TecnicoId);
                 }
-                else if (filtro == "nombre")
+                else if (filtro == "descripcion")
                 {
                     ListaTipoTecnicos = await tipoTecnicoService.Listar(t => t.Descripcion.Contains(valorFiltro));
+                }
+                else if (filtro == "incentivo" && decimal.TryParse(valorFiltro, out decimal incentivo))
+                {
+                    ListaTipoTecnicos = await tipoTecnicoService.Listar(t => t.Incentivo == incentivo);
+                }
+                else
+                {
+                    ListaTipoTecnicos = new List<TiposTecnicos>(); // Vaciar la lista si el filtro es inválido
                 }
             }
             else
@@ -130,7 +140,7 @@
         }
     }
 
-    private async Task IrEliminar(int tipoId)
+    private void IrEliminar(int tipoId)
     {
         navigationManager.NavigateTo($"/TipoTecnico/Delete/{tipoId}");
     }
