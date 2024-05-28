@@ -150,7 +150,7 @@
         }
     }
 
-    private void IrEliminar(int tipoId)
+    private async Task IrEliminar(int tipoId)
     {
         navigationManager.NavigateTo($"/TipoTecnico/Delete/{tipoId}");
     }
