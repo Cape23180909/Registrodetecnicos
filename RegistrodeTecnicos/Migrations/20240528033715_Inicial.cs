@@ -12,30 +12,13 @@ namespace RegistrodeTecnicos.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "IncentivosTecnicos",
-                columns: table => new
-                {
-                    IncentivoId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    TecnicoId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Descripcion = table.Column<string>(type: "TEXT", nullable: false),
-                    CantidadServicios = table.Column<int>(type: "INTEGER", nullable: false),
-                    Monto = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_IncentivosTecnicos", x => x.IncentivoId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TipoTecnicos",
                 columns: table => new
                 {
                     TipoId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Descripcion = table.Column<string>(type: "TEXT", nullable: false),
-                    Incentivo = table.Column<int>(type: "INTEGER", nullable: false)
+                    Incentivo = table.Column<decimal>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -64,10 +47,39 @@ namespace RegistrodeTecnicos.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "IncentivosTecnicos",
+                columns: table => new
+                {
+                    IncentivoId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    TecnicoId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Descripcion = table.Column<string>(type: "TEXT", nullable: false),
+                    CantidadServicios = table.Column<int>(type: "INTEGER", nullable: false),
+                    Monto = table.Column<decimal>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncentivosTecnicos", x => x.IncentivoId);
+                    table.ForeignKey(
+                        name: "FK_IncentivosTecnicos_Tecnicos_TecnicoId",
+                        column: x => x.TecnicoId,
+                        principalTable: "Tecnicos",
+                        principalColumn: "TecnicoId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncentivosTecnicos_TecnicoId",
+                table: "IncentivosTecnicos",
+                column: "TecnicoId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Tecnicos_TipoId",
                 table: "Tecnicos",
-                column: "TipoId");
+                column: "TipoId",
+                unique: true);
         }
 
         /// <inheritdoc />
