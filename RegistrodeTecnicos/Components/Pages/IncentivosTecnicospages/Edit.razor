@@ -152,7 +152,7 @@
             Message = mensaje,
         };
 
-    private void Mensaje(ToastType toastType, string mensaje)
+    private async Task Mensaje(ToastType toastType, string mensaje)
     {
         MensajeToast.Add(CreateToastMessage(toastType, mensaje));
     }
