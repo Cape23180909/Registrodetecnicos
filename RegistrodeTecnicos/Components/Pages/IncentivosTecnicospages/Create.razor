@@ -9,6 +9,8 @@
 <EditForm Model="tecnico" OnValidSubmit="Guardar" formname="crearIncentivoTecnicoForm">
     <DataAnnotationsValidator />
 
+    <Toasts class="p-3" Messages="MensajeToast" Placement="ToastsPlacement.TopRight" />
+
     <div class="card">
         <div class="card-header bg-primary text-white text-center py-2 rounded">
             <h3><i class="fas fa-clipboard-list"></i> Registro de Incentivos de Técnicos</h3>
@@ -83,6 +85,7 @@
 
 @code {
     private IncentivosTecnicos tecnico = new IncentivosTecnicos();
+    List<ToastMessage> MensajeToast = new List<ToastMessage>();
     private bool mostrarMensajeError = false;
     public bool Existe = false;
     public string mensaje;
@@ -105,14 +108,13 @@
         {
             if (!await Validar())
             {
-                mensaje = "Ya existe un incentivo con esa descripción";
-                mostrarMensajeError = true;
                 return;
             }
 
             var guardo = await incentivostecnicoService.Guardar(tecnico);
             if (guardo)
             {
+                Mensaje(ToastType.Success, "El tecnico se a guardado con exito");
                 Nuevo();
                 navigationManager.NavigateTo("/Incentivostecnicos/index");
             }
@@ -134,5 +136,19 @@
         tecnico = new IncentivosTecnicos();
         mostrarMensajeError = false;
         mensaje = string.Empty;
+    }
+
+    private ToastMessage CreateToastMessage(ToastType toastType, string mensaje)
+    => new ToastMessage
+        {
+            Type = toastType,
+            Title = "Notificación",
+            HelpText = $"{DateTime.Now}",
+            Message = mensaje,
+        };
+
+    private async Task Mensaje(ToastType toastType, string mensaje)
+    {
+        MensajeToast.Add(CreateToastMessage(toastType, mensaje));
     }
 }

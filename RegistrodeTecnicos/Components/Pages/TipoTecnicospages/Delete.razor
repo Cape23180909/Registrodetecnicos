@@ -10,6 +10,8 @@
         <div class="card-header bg-primary text-white text-center py-2 rounded">
             <h3><strong>Eliminar Técnico</strong></h3>
         </div>
+        <Toasts class="p-3" Messages="MensajeToast" Placement="ToastsPlacement.TopRight" />
+        
         <div class="card-header">
             <h3 class="text-danger">¿Estás seguro de que quieres eliminar este técnico?</h3>
         </div>
@@ -51,6 +53,7 @@
 @code {
     [Parameter]
     public int TipoId { get; set; }
+    List<ToastMessage> MensajeToast = new List<ToastMessage>();
     public TiposTecnicos? tipotécnicos { get; set; } = new TiposTecnicos();
 
     protected override async Task OnInitializedAsync()
@@ -70,12 +73,26 @@
 
         if (await tipoTecnicoServices.Eliminar(TipoId))
         {
-            Volver();
+             Mensaje(ToastType.Success, " El tipo tecnico a sido eliminado correctamente .");
         }
     }
 
     public async Task Volver()
     {
         NavigationManager.NavigateTo("/TipoTecnicos/index");
+    }
+
+    private ToastMessage CreateToastMessage(ToastType toastType, string mensaje)
+       => new ToastMessage
+       {
+           Type = toastType,
+           Title = "Notificación",
+           HelpText = $"{DateTime.Now}",
+           Message = mensaje,
+       };
+
+    private void Mensaje(ToastType toastType, string mensaje)
+    {
+        MensajeToast.Add(CreateToastMessage(toastType, mensaje));
     }
 }

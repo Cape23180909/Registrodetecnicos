@@ -51,6 +51,7 @@
 
 @code {
     private TiposTecnicos tecnico = new TiposTecnicos();
+    List<ToastMessage> MensajeToast = new List<ToastMessage>();
     public bool Existe = false;
     public string mensaje;
 
@@ -63,8 +64,8 @@
         var guardo = await tipotecnicoService.Guardar(tecnico);
         if (guardo)
         {
+            Mensaje(ToastType.Success, "El tecnico se a guardado con exito");
             Nuevo();
-            navigationManager.NavigateTo("/TipoTecnicos/index");
         }
     }
 
@@ -78,4 +79,19 @@
         Existe = await tipotecnicoService.Existe(tecnico.TipoId, tecnico.Descripcion);
         return !Existe;
     }
+
+    private ToastMessage CreateToastMessage(ToastType toastType, string mensaje)
+    => new ToastMessage
+        {
+            Type = toastType,
+            Title = "Notificación",
+            HelpText = $"{DateTime.Now}",
+            Message = mensaje,
+        };
+
+    private void Mensaje(ToastType toastType, string mensaje)
+    {
+        MensajeToast.Add(CreateToastMessage(toastType, mensaje));
+    }
+}
 }

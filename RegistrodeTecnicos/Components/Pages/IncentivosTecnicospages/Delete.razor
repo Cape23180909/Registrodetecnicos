@@ -9,6 +9,8 @@
     <div class="card shadow-header">
         <div class="card-header bg-primary text-white text-center py-2 rounded">
             <h3><strong>Eliminar incentivo de Técnico</strong></h3>
+
+            <Toasts class="p-3" Messages="MensajeToast" Placement="ToastsPlacement.TopRight" />
         </div>
         <div class="card-header">
             <h3 class="text-danger">¿Estás seguro de que quieres eliminar este técnico?</h3>
@@ -55,6 +57,7 @@
 @code {
     [Parameter]
     public int TipoId { get; set; }
+    List<ToastMessage> MensajeToast = new List<ToastMessage>();
     public IncentivosTecnicos? tecnico { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -74,12 +77,26 @@
 
         if (await incentivostecnicoService.Eliminar(TipoId))
         {
-            Volver();
+            Mensaje(ToastType.Success, "El incentivo tecnico se a Eliminado correctamente");
         }
     }
 
     public async Task Volver()
     {
         navigationManager.NavigateTo("/Incentivostecnicos/index");
+    }
+
+    private ToastMessage CreateToastMessage(ToastType toastType, string mensaje)
+    => new ToastMessage
+    {
+        Type = toastType,
+        Title = "Notificación",
+        HelpText = $"{DateTime.Now}",
+        Message = mensaje,
+    };
+
+    private void Mensaje(ToastType toastType, string mensaje)
+    {
+        MensajeToast.Add(CreateToastMessage(toastType, mensaje));
     }
 }
