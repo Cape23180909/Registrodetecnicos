@@ -10,6 +10,8 @@
             <h3> <i class="fas fa-clipboard-list"></i> Modificar Tipo de Técnico</h3>
         </div>
 
+        <Toasts class="p-3" Messages="MensajeToast" Placement="ToastsPlacement.TopRight" />
+
         <div class="card-body">
             <!-- TipoId -->
             <div class="row">
@@ -56,6 +58,7 @@
 @code {
     [Parameter]
     public int TipoId { get; set; }
+    List<ToastMessage> MensajeToast = new List<ToastMessage>();
     public TiposTecnicos tipotecnicos { get; set; } = new TiposTecnicos();
     private bool Existe = false;
 
@@ -99,6 +102,7 @@
         if (guardado)
         {
             Nuevo();
+            Mensaje(ToastType.Success, "Haz modificado con exito. Puedes dar click en el boton retroceder");
         }
     }
 
@@ -106,6 +110,7 @@
     {
         var eliminado = await tipoTecnicoServices.Eliminar(tipotecnicos.TipoId);
         Nuevo();
+        Mensaje(ToastType.Success, "El tipo tecnico se a eliminado correctamente");
     }
 
     private async Task Retroceder()
@@ -118,5 +123,19 @@
         var listaTipos = await tipoTecnicoServices.Listar(t => t.Descripcion.ToLower() == tipotecnicos.Descripcion.ToLower() && t.TipoId != tipotecnicos.TipoId);
         Existe = listaTipos.Any();
         return Existe;
+    }
+
+    private ToastMessage CreateToastMessage(ToastType toastType, string mensaje)
+       => new ToastMessage
+           {
+               Type = toastType,
+               Title = "Notificación",
+               HelpText = $"{DateTime.Now}",
+               Message = mensaje,
+           };
+
+    private async Task Mensaje(ToastType toastType, string mensaje)
+    {
+        MensajeToast.Add(CreateToastMessage(toastType, mensaje));
     }
 }

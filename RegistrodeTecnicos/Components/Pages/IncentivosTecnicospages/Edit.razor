@@ -12,6 +12,9 @@
         <div class="card-header bg-primary text-white text-center py-2 rounded">
             <h3><i class="fas fa-clipboard-list"></i> Modificar Incentivo de Técnico</h3>
         </div>
+
+        <Toasts class="p-3" Messages="MensajeToast" Placement="ToastsPlacement.TopRight" />
+
         <div class="card-body">
             <!-- IncentivoId -->
             <div class="form-group">
@@ -77,6 +80,7 @@
 @code {
     [Parameter]
     public int IncentivoId { get; set; }
+    List<ToastMessage> MensajeToast = new List<ToastMessage>();
     public IncentivosTecnicos tecnico { get; set; } = new IncentivosTecnicos();
     private bool mostrarMensajeError = false;
     private bool Existe = false;
@@ -120,8 +124,8 @@
         var guardado = await incentivostecnicoService.Guardar(tecnico);
         if (guardado)
         {
+            Mensaje(ToastType.Success, "Haz modificado con exito. Puedes dar click en el boton retroceder");
             Nuevo();
-            navigationManager.NavigateTo("/Incentivostecnicos/index");
         }
     }
 
@@ -129,6 +133,7 @@
     {
         var eliminado = await incentivostecnicoService.Eliminar(tecnico.IncentivoId);
         Nuevo();
+        Mensaje(ToastType.Success, "El incentivo se a eliminado correctamente");
     }
 
     public async Task<bool> Validar()
@@ -137,4 +142,19 @@
         Existe = listaTipos.Any();
         return !Existe;
     }
+
+    private ToastMessage CreateToastMessage(ToastType toastType, string mensaje)
+    => new ToastMessage
+        {
+            Type = toastType,
+            Title = "Notificación",
+            HelpText = $"{DateTime.Now}",
+            Message = mensaje,
+        };
+
+    private void Mensaje(ToastType toastType, string mensaje)
+    {
+        MensajeToast.Add(CreateToastMessage(toastType, mensaje));
+    }
+}
 }

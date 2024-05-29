@@ -11,6 +11,9 @@
         <div class="card-header bg-primary text-white text-center py-2 rounded">
             <h3><i class="fas fa-clipboard-list"></i> Modificar Técnico</h3>
         </div>
+
+        <Toasts class="p-3" Messages="MensajeToast" Placement="ToastsPlacement.TopRight" />
+
         <div class="card-body">
             <!-- TecnicoId -->
             <div class="row">
@@ -66,7 +69,7 @@
 @code {
     [Parameter]
     public int TecnicoId { get; set; }
-
+    List<ToastMessage> MensajeToast = new List<ToastMessage>();
     public Tecnicos tecnico { get; set; } = new Tecnicos();
     public List<TiposTecnicos> tipos = new List<TiposTecnicos>();
     private bool Existe = false;
@@ -110,7 +113,7 @@
         if (guardo)
         {
             Nuevo();
-            NavigationManager.NavigateTo("/Tecnico/index");
+            Mensaje(ToastType.Success, "Haz modificado con exito. Puedes dar click en el boton retroceder");
         }
     }
 
@@ -118,6 +121,8 @@
     {
         var eliminado = await tecnicoService.Eliminar(tecnico.TecnicoId);
         Nuevo();
+        Mensaje(ToastType.Success, "El tecnico se a eliminado correctamente");
+
     }
 
     private async Task Retroceder()
@@ -130,5 +135,19 @@
         var listaTecnicos = await tecnicoService.Listar(t => t.Nombre.ToLower() == tecnico.Nombre.ToLower() && t.TecnicoId != tecnico.TecnicoId);
         Existe = listaTecnicos.Any();
         return !Existe;
+    }
+
+    private ToastMessage CreateToastMessage(ToastType toastType, string mensaje)
+    => new ToastMessage
+        {
+            Type = toastType,
+            Title = "Notificación",
+            HelpText = $"{DateTime.Now}",
+            Message = mensaje,
+        };
+
+    private async Task Mensaje(ToastType toastType, string mensaje)
+    {
+        MensajeToast.Add(CreateToastMessage(toastType, mensaje));
     }
 }
