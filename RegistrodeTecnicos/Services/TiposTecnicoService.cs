@@ -11,34 +11,34 @@ namespace RegistrodeTecnicos.Services;
 
 public class TiposTecnicoService
 {
-    private readonly Contexto _contexto;
+    private readonly Contexto Contexto;
     public TiposTecnicoService(Contexto contexto)
     {
-        _contexto = contexto;
+        Contexto = contexto;
     }
     // Método Existente
     public async Task<bool> Existe(int tipoTecnicoId)
     {
-        return await _contexto
+        return await Contexto
             .TipoTecnicos.AnyAsync(t => t.TipoId == tipoTecnicoId);
     }
     public async Task<bool> Existe(int tipoId, string? descripcion)
     {
-        return await _contexto.TipoTecnicos
+        return await Contexto.TipoTecnicos
             .AnyAsync(t => t.TipoId != tipoId && t.Descripcion.Equals(descripcion));
     }
     // Método Insertar
     private async Task<bool> Insertar(TiposTecnicos tipoTecnicos)
     {
-        _contexto.TipoTecnicos.Add(tipoTecnicos);
-        return await _contexto
+        Contexto.TipoTecnicos.Add(tipoTecnicos);
+        return await Contexto
             .SaveChangesAsync() > 0;
     }
     // Método Modificar
     private async Task<bool> Modificar(TiposTecnicos tipoTecnicos)
     {
-        _contexto.TipoTecnicos.Update(tipoTecnicos);
-        return await _contexto
+        Contexto.TipoTecnicos.Update(tipoTecnicos);
+        return await Contexto
             .SaveChangesAsync() > 0;
     }
     // Método guardar
@@ -52,32 +52,32 @@ public class TiposTecnicoService
     // Método eliminar
     public async Task<bool> Eliminar(int id)
     {
-        var tipoTecnico = await _contexto
+        var tipoTecnico = await Contexto
             .TipoTecnicos.FindAsync(id);
         if (tipoTecnico == null)
             return false;
 
-        _contexto.TipoTecnicos.Remove(tipoTecnico);
-        return await _contexto.SaveChangesAsync() > 0;
+        Contexto.TipoTecnicos.Remove(tipoTecnico);
+        return await Contexto.SaveChangesAsync() > 0;
     }
     // Método buscar
     public async Task<TiposTecnicos?> Buscar(int id)
     {
-        return await _contexto.TipoTecnicos
+        return await Contexto.TipoTecnicos
             .AsNoTracking()
             .FirstOrDefaultAsync(t => t.TipoId == id);
     }
     // Método listar
     public async Task<List<TiposTecnicos>> Listar(Expression<Func<TiposTecnicos, bool>> criterio)
     {
-        return await _contexto.TipoTecnicos
+        return await Contexto.TipoTecnicos
             .AsNoTracking()
             .Where(criterio)
             .ToListAsync();
     }
     public async Task<List<Tecnicos>> ObtenerTecnicosPorTipo(int tipoTecnicoId)
     {
-        return await _contexto.Tecnicos
+        return await Contexto.Tecnicos
             .Where(t => t.TipoId == tipoTecnicoId)
             .Include(t => t.IncentivoId) // Incluir los incentivos relacionados Ojo con eso
             .ToListAsync();
@@ -85,7 +85,7 @@ public class TiposTecnicoService
 
     public async Task<List<int>> ObtenerTecnicosIdsPorTipo(int tipoTecnicoId)
     {
-        var tecnicosIds = await _contexto.Tecnicos
+        var tecnicosIds = await Contexto.Tecnicos
             .Where(t => t.TipoId == tipoTecnicoId)
             .Select(t => t.TecnicoId)
             .ToListAsync();
@@ -97,17 +97,17 @@ public class TiposTecnicoService
     {
         var tecnicosIds = await ObtenerTecnicosIdsPorTipo(tipoTecnicoId);
 
-        var incentivos = await _contexto.IncentivosTecnicos
+        var incentivos = await Contexto.IncentivosTecnicos
             .Where(i => tecnicosIds.Contains(i.TecnicoId))
             .ToListAsync();
 
         var totalIncentivos = incentivos.Sum(i => i.Monto ?? 0);
 
-        var tipoTecnico = await _contexto.TipoTecnicos.FindAsync(tipoTecnicoId);
+        var tipoTecnico = await Contexto.TipoTecnicos.FindAsync(tipoTecnicoId);
         if (tipoTecnico != null)
         {
             tipoTecnico.Incentivo = totalIncentivos;
-            await _contexto.SaveChangesAsync();
+            await Contexto.SaveChangesAsync();
         }
     }
 
