@@ -134,14 +134,14 @@
 
     private ToastMessage CreateToastMessage(ToastType toastType, string mensaje)
     => new ToastMessage
-    {
-        Type = toastType,
-        Title = "Notificación",
-        HelpText = $"{DateTime.Now}",
-        Message = mensaje,
-    };
+        {
+            Type = toastType,
+            Title = "Notificación",
+            HelpText = $"{DateTime.Now}",
+            Message = mensaje,
+        };
 
-    private void Mensaje(ToastType toastType, string mensaje)
+    private async Task Mensaje(ToastType toastType, string mensaje)
     {
         MensajeToast.Add(CreateToastMessage(toastType, mensaje));
     }
