@@ -31,7 +31,7 @@ public class IncentivosTecnicoService
     private async Task<bool> Insertar(IncentivosTecnicos incentivo)
     {
         if (incentivo == null || string.IsNullOrWhiteSpace(incentivo.Descripcion))
-            throw new ArgumentException("La descripción es obligatoria");
+          
 
         Contexto.IncentivosTecnicos.Add(incentivo);
         return await Contexto.SaveChangesAsync() > 0;
