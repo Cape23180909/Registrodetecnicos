@@ -31,7 +31,7 @@ public class IncentivosTecnicoService
     private async Task<bool> Insertar(IncentivosTecnicos incentivo)
     {
         if (incentivo == null || string.IsNullOrWhiteSpace(incentivo.Descripcion))
-          
+            throw new ArgumentException("El incentivo es nulo o la descripción está vacía");
 
         Contexto.IncentivosTecnicos.Add(incentivo);
         return await Contexto.SaveChangesAsync() > 0;
@@ -40,7 +40,7 @@ public class IncentivosTecnicoService
     private async Task<bool> Modificar(IncentivosTecnicos incentivo)
     {
         if (incentivo == null || string.IsNullOrWhiteSpace(incentivo.Descripcion))
-            throw new ArgumentException("La descripción es obligatoria");
+            throw new ArgumentException("El incentivo es nulo o la descripción está vacía");
 
         Contexto.IncentivosTecnicos.Update(incentivo);
         return await Contexto.SaveChangesAsync() > 0;
@@ -73,5 +73,4 @@ public class IncentivosTecnicoService
     {
         return await Contexto.IncentivosTecnicos.AsNoTracking().Where(criterio).ToListAsync();
     }
-
 }

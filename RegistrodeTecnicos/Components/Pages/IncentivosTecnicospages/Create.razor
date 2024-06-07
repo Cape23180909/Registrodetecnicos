@@ -108,26 +108,37 @@
         {
             if (!await Validar())
             {
+                mensaje = "La descripción ya existe.";
+                mostrarMensajeError = true;
+                Console.WriteLine(mensaje);
                 return;
             }
 
             var guardo = await incentivostecnicoService.Guardar(tecnico);
             if (guardo)
             {
-                Mensaje(ToastType.Success, "El tecnico se a guardado con exito");
-                Nuevo();
-               
+                Mensaje(ToastType.Success, "El técnico se ha guardado con éxito");
+                await Nuevo();
+                mostrarMensajeError = false;
             }
             else
             {
                 mensaje = "Error al guardar el incentivo.";
                 mostrarMensajeError = true;
+                Console.WriteLine(mensaje);
             }
+        }
+        catch (HttpRequestException ex)
+        {
+            mensaje = $"Error al conectarse con el servidor: {ex.Message}";
+            mostrarMensajeError = true;
+            Console.WriteLine(mensaje);
         }
         catch (Exception ex)
         {
             mensaje = $"Ocurrió un error: {ex.Message}";
             mostrarMensajeError = true;
+            Console.WriteLine(mensaje);
         }
     }
 
@@ -147,7 +158,7 @@
             Message = mensaje,
         };
 
-    private async Task Mensaje(ToastType toastType, string mensaje)
+    private void Mensaje(ToastType toastType, string mensaje)
     {
         MensajeToast.Add(CreateToastMessage(toastType, mensaje));
     }
